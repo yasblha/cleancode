@@ -1,0 +1,39 @@
+version: '3.9'
+services:
+  nest:
+    build:
+      context: ./infrastructure/plateforms/Backend/nest
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./infrastructure/plateforms/Backend/nest:/app
+    environment:
+      NODE_ENV: production
+
+  react:
+    build:
+      context: ./infrastructure/plateforms/frontend/front-react
+      dockerfile: dockerfile
+    platform: linux/amd64
+    ports:
+      - "80:80"
+    volumes:
+      - ./infrastructure/plateforms/frontend/front-react:/app
+    environment:
+      NODE_ENV: production
+
+  database:
+    image: postgres:15
+    container_name: postgres_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: moto_management
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
