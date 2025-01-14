@@ -4,7 +4,7 @@ export class Bikes {
         public brand: string,
         public model: string,
         public mileage: number,
-        public registrationNumber: string,
+        public vin: string,
         public purchaseDate: Date,
         public warrantyExpirationDate: Date | null,
         public ownerId: string,

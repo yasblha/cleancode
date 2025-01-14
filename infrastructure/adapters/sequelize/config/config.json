@@ -1,0 +1,10 @@
+{
+    "production": {
+      "username": "root",
+      "password": "password",
+      "database": "moto_management_test",
+      "host": "127.0.0.1",
+      "port": 5432,
+      "dialect": "postgres"
+    }
+  }

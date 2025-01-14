@@ -12,13 +12,13 @@ services:
 
   react:
     build:
-      context: ./infrastructure/platforms/frontend/react
+      context: ./infrastructure/platforms/frontend/front-react
       dockerfile: dockerfile
     platform: linux/amd64
     ports:
       - "80:80"
     volumes:
-      - ./infrastructure/platforms/frontend/react:/app
+      - ./infrastructure/platforms/frontend/front-react:/app
     environment:
       NODE_ENV: production
 
@@ -30,7 +30,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: moto_management_test
+      POSTGRES_DB: moto_management
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

@@ -1,5 +1,5 @@
 import { Incident as PrismaIncident } from '@prisma/client';
-import { Incidents } from '../../../../../domain/entities/Incidents';
+import { Incidents } from '../../../domain/entities/Incidents';
 
 export class IncidentsMapper {
     static toDomain(prismaIncident: PrismaIncident): Incidents {

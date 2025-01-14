@@ -1,11 +1,6 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
+import express from 'express';
 // Create an Express application
-const app = (0, express_1.default)();
+const app = express();
 // Set the port number for the server
 const port = 3000;
 // Define a route for the root path ('/')

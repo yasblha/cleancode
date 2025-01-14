@@ -2,15 +2,13 @@
   "name": "express",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node src/index.ts",
     "dev": "node --env-file=.env --watch -r ts-node/register src/index.ts"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.5",
