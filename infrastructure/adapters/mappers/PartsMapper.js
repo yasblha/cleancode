@@ -1,7 +1,10 @@
-import { Parts } from '../../../../../domain/entities/Parts';
-export class PartsMapper {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PartsMapper = void 0;
+const Parts_1 = require("../../../../../domain/entities/Parts");
+class PartsMapper {
     static toDomain(prismaPart) {
-        return new Parts(prismaPart.id, prismaPart.name, prismaPart.description, prismaPart.stockQuantity, prismaPart.minStockLevel, prismaPart.price, prismaPart.createdAt, prismaPart.updatedAt);
+        return new Parts_1.Parts(prismaPart.id, prismaPart.name, prismaPart.description, prismaPart.stockQuantity, prismaPart.minStockLevel, prismaPart.price, prismaPart.createdAt, prismaPart.updatedAt);
     }
     static toPrisma(domainPart) {
         return {
@@ -16,3 +19,4 @@ export class PartsMapper {
         };
     }
 }
+exports.PartsMapper = PartsMapper;

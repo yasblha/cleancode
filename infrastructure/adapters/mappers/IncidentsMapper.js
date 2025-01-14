@@ -1,7 +1,10 @@
-import { Incidents } from '../../../domain/entities/Incidents';
-export class IncidentsMapper {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.IncidentsMapper = void 0;
+const Incidents_1 = require("../../../domain/entities/Incidents");
+class IncidentsMapper {
     static toDomain(prismaIncident) {
-        return new Incidents(prismaIncident.id, prismaIncident.bikeId, prismaIncident.date, prismaIncident.description, prismaIncident.isResolved);
+        return new Incidents_1.Incidents(prismaIncident.id, prismaIncident.bikeId, prismaIncident.date, prismaIncident.description, prismaIncident.isResolved);
     }
     static toPrisma(domainIncident) {
         return {
@@ -13,3 +16,4 @@ export class IncidentsMapper {
         };
     }
 }
+exports.IncidentsMapper = IncidentsMapper;

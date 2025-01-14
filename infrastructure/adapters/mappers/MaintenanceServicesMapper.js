@@ -1,7 +1,10 @@
-import { MaintenanceServices } from '../../domain/entities/MaintenanceServices';
-export class MaintenanceServicesMapper {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MaintenanceServicesMapper = void 0;
+const MaintenanceServices_1 = require("../../domain/entities/MaintenanceServices");
+class MaintenanceServicesMapper {
     static toDomain(prismaService) {
-        return new MaintenanceServices(prismaService.id, prismaService.bikeId, prismaService.date, prismaService.description, prismaService.type, prismaService.isResolved, prismaService.cost, prismaService.partsUsed, prismaService.technicianId, prismaService.createdAt, prismaService.updatedAt);
+        return new MaintenanceServices_1.MaintenanceServices(prismaService.id, prismaService.bikeId, prismaService.date, prismaService.description, prismaService.type, prismaService.isResolved, prismaService.cost, prismaService.partsUsed, prismaService.technicianId, prismaService.createdAt, prismaService.updatedAt);
     }
     static toPrisma(domainService) {
         return {
@@ -19,3 +22,4 @@ export class MaintenanceServicesMapper {
         };
     }
 }
+exports.MaintenanceServicesMapper = MaintenanceServicesMapper;

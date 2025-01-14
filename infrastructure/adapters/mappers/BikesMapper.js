@@ -1,7 +1,10 @@
-import { Bikes } from '../../../../../domain/entities/Bikes';
-export class BikesMapper {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BikesMapper = void 0;
+const Bikes_1 = require("../../../../../domain/entities/Bikes");
+class BikesMapper {
     static toDomain(prismaBike) {
-        return new Bikes(prismaBike.id, prismaBike.brand, prismaBike.model, prismaBike.mileage, prismaBike.registrationNumber, prismaBike.purchaseDate, prismaBike.warrantyExpirationDate, prismaBike.ownerId, prismaBike.isActive, prismaBike.isInMaintenance, prismaBike.isDecommissioned, prismaBike.nextMaintenanceMileage, prismaBike.nextMaintenanceDate, prismaBike.createdAt, prismaBike.updatedAt);
+        return new Bikes_1.Bikes(prismaBike.id, prismaBike.brand, prismaBike.model, prismaBike.mileage, prismaBike.registrationNumber, prismaBike.purchaseDate, prismaBike.warrantyExpirationDate, prismaBike.ownerId, prismaBike.isActive, prismaBike.isInMaintenance, prismaBike.isDecommissioned, prismaBike.nextMaintenanceMileage, prismaBike.nextMaintenanceDate, prismaBike.createdAt, prismaBike.updatedAt);
     }
     static toPrisma(domainBike) {
         return {
@@ -23,3 +26,4 @@ export class BikesMapper {
         };
     }
 }
+exports.BikesMapper = BikesMapper;
