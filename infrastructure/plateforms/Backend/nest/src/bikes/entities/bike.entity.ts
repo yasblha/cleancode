@@ -1,7 +1,7 @@
-import { Bikes} from "../../../../../../../domain/entities/Bikes";
+//import { Bikes} from "../../../../../../../domain/entities/Bikes";
 
 export class Bike {
-    static toDomain(prismaBike: PrismaBike): Bikes {
+   /* static toDomain(prismaBike: PrismaBike): Bikes {
         return new Bikes(
             prismaBike.id,
             prismaBike.name,
@@ -25,5 +25,5 @@ export class Bike {
             createdAt: domainBike.createdAt,
             updatedAt: domainBike.updatedAt,
         };
-    }
+    }*/
 }

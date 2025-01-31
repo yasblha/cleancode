@@ -1,10 +1,12 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 
 // Create an Express application
 const app = express();
 
 // Set the port number for the server
-const port = 3000;
+const port = 3001;
+app.use(express.json());
+
 
 // Define a route for the root path ('/')
 app.get('/', (req, res) => {
