@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.tsx
+import React from 'react';
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Container,
+    Grid,
+    Button,
+    Box
+} from '@mui/material';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+    return (
+        <>
+            {/* Header avec AppBar */}
+            <AppBar position="static">
+                <Toolbar>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        Gestion de Flotte - Triumph Motorcycles
+                    </Typography>
+                    <Button color="inherit">Connexion</Button>
+                </Toolbar>
+            </AppBar>
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+            {/* Contenu principal */}
+            <Container maxWidth="lg" sx={{ mt: 4 }}>
+                <Box sx={{ textAlign: 'center', mb: 4 }}>
+                    <Typography variant="h3" gutterBottom>
+                        Bienvenue sur la plateforme
+                    </Typography>
+                    <Typography variant="subtitle1" color="text.secondary">
+                        Suivi, entretien et gestion optimisée de vos motos
+                    </Typography>
+                </Box>
 
-export default App
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={4}>
+                        <Button variant="contained" color="primary" fullWidth size="large">
+                            Motos
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Button variant="contained" color="secondary" fullWidth size="large">
+                            Entretiens
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                        <Button variant="contained" color="success" fullWidth size="large">
+                            Pièces détachées
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Container>
+        </>
+    );
+};
+
+export default App;
