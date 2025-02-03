@@ -1,0 +1,1 @@
+{"version":3,"file":"RemoveIncidentUseCase.js","sourceRoot":"","sources":["RemoveIncidentUseCase.ts"],"names":[],"mappings":";;;;;;;;;;;AAEA,MAAqB,qBAAqB;IACtC,YAA6B,mBAAwC;QAAxC,wBAAmB,GAAnB,mBAAmB,CAAqB;IAAG,CAAC;IAEnE,OAAO,CAAC,EAAU;;YACpB,OAAO,IAAI,CAAC,mBAAmB,CAAC,MAAM,CAAC,EAAE,CAAC,CAAC;QAC/C,CAAC;KAAA;CACJ;AAND,wCAMC"}

@@ -8,6 +8,7 @@ services:
       - "3000:3000"
     volumes:
       - ./infrastructure/plateforms/Backend/nest:/app
+      - ./infrastructure/sequelize/sequelizedb.ts:/app/src/sequelize/sequelizedb.ts
     environment:
       NODE_ENV: production
 
@@ -19,6 +20,7 @@ services:
         - "3001:3001"
     volumes:
       - ./infrastructure/plateforms/Backend/express:/app
+      - ./infrastructure/sequelize/sequelizedb.ts:/app/src/sequelize/sequelizedb.ts
     environment:
         NODE_ENV: production
 

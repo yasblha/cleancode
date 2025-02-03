@@ -1,19 +1,25 @@
-# Étape 1 : Construire l'application
 FROM node:18 AS build
 
 WORKDIR /app
 
 COPY package.json package-lock.json ./
+
 RUN npm install
 
-COPY . ./
+COPY . .
+
 RUN npm run build
 
-# Étape 2 : Servir l'application avec Nginx
-FROM nginx:alpine
+FROM node:18 AS production
 
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-EXPOSE 80
+# Copier les dépendances et le build depuis l'étape de build
+COPY --from=build /app/package.json /app/package-lock.json ./
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/node_modules ./node_modules
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+
+CMD ["npm", "start"]

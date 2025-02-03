@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
-// @ts-ignore
 //import { SequelizeBikesRepository } from '../../../../sequelize/repositories/BikesRepository';
-// @ts-ignore
 //import FindAllBikeUseCase from '../../../../../application/useCases/Bikes/FindAllBikeUseCase';
-import sequelize from "../../../../sequelize/sequelize";
+// @ts-ignore
+import sequelizedb from "../../../../sequelize/sequelizedb";
 
 const app = express();
 
@@ -12,7 +11,7 @@ app.use(express.json());
 
 async function start() {
     try {
-        await sequelize.authenticate();
+        await sequelizedb.authenticate();
         console.log('Connexion à Postgres réussie.');
     } catch (error) {
         console.error('Erreur de connexion à la base de données :', error);

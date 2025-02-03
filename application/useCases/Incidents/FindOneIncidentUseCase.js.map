@@ -1,0 +1,1 @@
+{"version":3,"file":"FindOneIncidentUseCase.js","sourceRoot":"","sources":["FindOneIncidentUseCase.ts"],"names":[],"mappings":";;;;;;;;;;;AAGA,MAAqB,sBAAsB;IACvC,YAA6B,mBAAwC;QAAxC,wBAAmB,GAAnB,mBAAmB,CAAqB;IAAG,CAAC;IAEnE,OAAO,CAAC,EAAU;;YACpB,OAAO,IAAI,CAAC,mBAAmB,CAAC,OAAO,CAAC,EAAE,CAAC,CAAC;QAChD,CAAC;KAAA;CACJ;AAND,yCAMC"}

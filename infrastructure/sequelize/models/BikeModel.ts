@@ -1,6 +1,6 @@
 // infrastructure/sequelize/models/BikeModel.ts
 import { DataTypes, Model } from 'sequelize';
-import sequelize from '../sequelize';
+import sequelize from '../sequelizedb';
 
 class BikeModel extends Model {
     public id!: string;

@@ -1,4 +1,4 @@
-import sequelize from './sequelize';
+import sequelize from './sequelizedb';
 import BikeModel from './models/BikeModel';
 
 async function initializeDatabase() {
