@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 
-const sequelizedb = new Sequelize({
+export const sequelizedb = new Sequelize({
     dialect: 'postgres',
     host: process.env.POSTGRES_HOST || 'localhost',
     port: parseInt(process.env.POSTGRES_PORT || '5432'),
