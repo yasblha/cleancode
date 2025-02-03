@@ -1,15 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { SequelizeModule } from '@nestjs/sequelize';
-import  { sequelizedb } from '../../../../sequelize/sequelizedb';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [SequelizeModule.forRoot({
-    ...sequelizedb,
-    autoLoadModels: true,
-    synchronize: true,
-  }),],
+  imports: [DatabaseModule],
   controllers: [AppController],
   providers: [AppService],
 })

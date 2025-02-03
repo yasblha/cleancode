@@ -9,4 +9,7 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+  testConnection(): Promise<string> {
+    return this.appService.testConnection();
+  }
 }
