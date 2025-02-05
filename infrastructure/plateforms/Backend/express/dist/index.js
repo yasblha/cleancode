@@ -13,37 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-//import { SequelizeBikesRepository } from '../../../../sequelize/repositories/BikesRepository';
-//import FindAllBikeUseCase from '../../../../../application/useCases/Bikes/FindAllBikeUseCase';
-// @ts-ignore
-const sequelize_1 = __importDefault(require("@sequelize/sequelize"));
+require("./database/mongo.connection");
+const sequelizedb_1 = __importDefault(require("./database/sequelizedb"));
+//import bikeRoutes from '@app/src/routes/bike.routes';
 const app = (0, express_1.default)();
 const port = 3001;
 app.use(express_1.default.json());
+//app.use('/bikes', bikeRoutes);
+app.get('/', (req, res) => {
+    res.send('Hello, TypeScript + Node.js + Express!');
+});
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield sequelize_1.default.authenticate();
+            yield sequelizedb_1.default.authenticate();
             console.log('Connexion à Postgres réussie.');
         }
         catch (error) {
             console.error('Erreur de connexion à la base de données :', error);
         }
-        //const bikeRepo = new SequelizeBikesRepository();
-        //const findAllBikeUseCase = new FindAllBikeUseCase(bikeRepo);
-        app.get('/bikes', (req, res) => __awaiter(this, void 0, void 0, function* () {
-            try {
-                //const bikes = await findAllBikeUseCase.execute();
-                //res.json(bikes);
-                console.log('GET /bikes');
-            }
-            catch (error) {
-                res.status(500).json({ error: 'Erreur interne' });
-            }
-        }));
-        app.get('/', (req, res) => {
-            res.send('Hello, TypeScript + Node.js + Express!');
-        });
         app.listen(port, () => {
             console.log(`Server is running on http://localhost:${port}`);
         });

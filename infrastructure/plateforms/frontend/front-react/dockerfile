@@ -1,6 +1,6 @@
 FROM node:18 AS build
 
-WORKDIR /app
+WORKDIR /app/infrastructure/plateforms/frontend/front-react
 
 COPY package.json package-lock.json ./
 
@@ -12,13 +12,13 @@ RUN npm run build
 
 FROM node:18 AS production
 
-WORKDIR /app
+WORKDIR /app/infrastructure/plateforms/frontend/front-react
 
 # Copier les dépendances et le build depuis l'étape de build
-COPY --from=build /app/package.json /app/package-lock.json ./
-COPY --from=build /app/.next ./.next
-COPY --from=build /app/public ./public
-COPY --from=build /app/node_modules ./node_modules
+#COPY --from=build /app/infrastructure/plateforms/frontend/front-react/package.json /app/package-lock.json ./
+#COPY --from=build /app/infrastructure/plateforms/frontend/front-react/.next ./.next
+#COPY --from=build /app/infrastructure/plateforms/frontend/front-react/public ./public
+#COPY --from=build /app/infrastructure/plateforms/frontend/front-react/node_modules ./node_modules
 
 ENV PORT=80
 

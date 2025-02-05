@@ -4,9 +4,12 @@
     "module": "commonjs",
     "rootDir": "./src",
     "moduleResolution": "node",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@app/*": ["src/*"]
+      "@app/*": ["src/*"],
+      "@application/*": ["/app/application/*"],
+      "@domain/*": ["/app/domain/*"],
+      "@infrastructure/*": ["/app/infrastructure/*"]
     },
     "sourceMap": true,
     "outDir": "./dist",
@@ -16,7 +19,10 @@
     "skipLibCheck": true
   },
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "/app/application/**/*.ts",
+    "/app/domain/**/*.ts",
+    "/app/infrastructure/**/*.ts"
   ],
   "exclude": [
     "node_modules",

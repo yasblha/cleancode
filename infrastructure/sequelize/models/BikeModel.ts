@@ -1,9 +1,10 @@
 // infrastructure/sequelize/models/BikeModel.ts
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../sequelizedb';
+import VinIdentifier from "@domain/value-objects/Vinidentifier";
 
 class BikeModel extends Model {
-    public id!: string;
+    public vin!: string;
     public brand!: string;
     public model!: string;
     public mileage!: number;
@@ -22,10 +23,11 @@ class BikeModel extends Model {
 
 BikeModel.init(
     {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+        vin: {
+            type: DataTypes.STRING(17),
             primaryKey: true,
+            allowNull: false,
+            unique: true,
         },
         brand: {
             type: DataTypes.STRING,

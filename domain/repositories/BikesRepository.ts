@@ -1,9 +1,10 @@
 import { Bikes } from '../entities/Bikes';
+import VinIdentifier from "@domain/value-objects/Vinidentifier";
 
 export interface BikesRepository {
     create(bike: Bikes): Promise<Bikes>;
     findAll(): Promise<Bikes[]>;
-    findOne(id: string): Promise<Bikes | null>;
-    update(id: string, bike: Partial<Bikes>): Promise<Bikes | null>;
-    remove(id: string): Promise<boolean>;
+    findOne(vin: VinIdentifier): Promise<Bikes | null>;
+    update(vin: VinIdentifier, bike: Partial<Bikes>): Promise<Bikes | null>;
+    remove(vin: VinIdentifier): Promise<boolean>;
 }

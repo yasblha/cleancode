@@ -1,5 +1,5 @@
 import sequelize from './sequelizedb';
-import BikeModel from './models/BikeModel';
+//import ;
 
 async function initializeDatabase() {
     try {

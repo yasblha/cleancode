@@ -5,14 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // infrastructure/sequelize/models/BikeModel.ts
 const sequelize_1 = require("sequelize");
-const sequelize_2 = __importDefault(require("../sequelize"));
+const sequelizedb_1 = __importDefault(require("../sequelizedb"));
 class BikeModel extends sequelize_1.Model {
 }
 BikeModel.init({
-    id: {
-        type: sequelize_1.DataTypes.UUID,
-        defaultValue: sequelize_1.DataTypes.UUIDV4,
+    vin: {
+        type: sequelize_1.DataTypes.STRING(17),
         primaryKey: true,
+        allowNull: false,
+        unique: true,
     },
     brand: {
         type: sequelize_1.DataTypes.STRING,
@@ -76,7 +77,7 @@ BikeModel.init({
         allowNull: true,
     },
 }, {
-    sequelize: sequelize_2.default,
+    sequelize: sequelizedb_1.default,
     modelName: 'Bike',
     tableName: 'bikes',
     timestamps: true,

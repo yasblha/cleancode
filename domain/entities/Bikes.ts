@@ -1,6 +1,8 @@
+import VinIdentifier from "@domain/value-objects/Vinidentifier";
+
 export class Bikes {
     public constructor(
-        public id: string,
+        public vin: VinIdentifier,
         public brand: string,
         public model: string,
         public mileage: number,

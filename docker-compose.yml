@@ -7,8 +7,11 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./infrastructure/plateforms/Backend/nest:/app
-      - ./infrastructure/sequelize/sequelizedb.ts:/app/src/sequelize/sequelizedb.ts
+      - ./infrastructure/plateforms/Backend/nest:/app/infrastructure/plateforms/Backend/nest
+      - ./application:/app/application
+      - ./domain:/app/domain
+      - ./infrastructure:/app/infrastructure
+      - /app/infrastructure/plateforms/Backend/nest/node_modules
     environment:
       NODE_ENV: production
 
@@ -19,8 +22,11 @@ services:
     ports:
         - "3001:3001"
     volumes:
-      - ./infrastructure/plateforms/Backend/express:/app
-      - ./infrastructure/sequelize/sequelizedb.ts:/app/src/sequelize/sequelizedb.ts
+      - ./infrastructure/plateforms/Backend/express:/app/infrastructure/plateforms/Backend/express
+      - ./application:/app/application
+      - ./domain:/app/domain
+      - ./infrastructure:/app/infrastructure
+      - /app/infrastructure/plateforms/Backend/express/node_modules
     environment:
         NODE_ENV: production
 
@@ -32,7 +38,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./infrastructure/plateforms/frontend/front-react:/app
+      - ./infrastructure/plateforms/frontend/front-react:/app/infrastructure/plateforms/frontend/front-react
+      - /app/infrastructure/plateforms/frontend/front-react/node_modules
     environment:
       NODE_ENV: production
 

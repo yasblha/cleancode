@@ -1,10 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
-const sequelize_2 = __importDefault(require("../sequelize"));
+const sequelizedb_1 = require("../sequelizedb");
 class PartModel extends sequelize_1.Model {
 }
 PartModel.init({
@@ -43,7 +40,7 @@ PartModel.init({
         allowNull: true,
     },
 }, {
-    sequelize: sequelize_2.default,
+    sequelize: sequelizedb_1.default,
     modelName: 'Part',
     tableName: 'parts',
     timestamps: true,

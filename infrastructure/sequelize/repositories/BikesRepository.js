@@ -13,13 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SequelizeBikesRepository = void 0;
-// infrastructure/sequelize/repositories/BikesRepository.ts
 const BikeModel_1 = __importDefault(require("../models/BikeModel"));
 class SequelizeBikesRepository {
     create(bike) {
         return __awaiter(this, void 0, void 0, function* () {
-            // @ts-ignore
-            const newBike = yield BikeModel_1.default.create(bike);
+            const newBike = yield BikeModel_1.default.create({ Bikes: bike, vin: bike.vin.toString() });
             return newBike.toJSON();
         });
     }
@@ -29,25 +27,24 @@ class SequelizeBikesRepository {
             return bikes.map(bike => bike.toJSON());
         });
     }
-    findOne(id) {
+    findOne(vin) {
         return __awaiter(this, void 0, void 0, function* () {
-            const bike = yield BikeModel_1.default.findByPk(id);
+            const bike = yield BikeModel_1.default.findOne({ where: { vin } });
             return bike ? bike.toJSON() : null;
         });
     }
-    update(id, bike) {
+    update(vin, bike) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [affectedCount] = yield BikeModel_1.default.update(bike, { where: { id } });
+            const [affectedCount] = yield BikeModel_1.default.update(bike, { where: { vin } });
             if (affectedCount > 0) {
-                const updatedBike = yield BikeModel_1.default.findByPk(id);
-                return updatedBike ? updatedBike.toJSON() : null;
+                return this.findOne(vin);
             }
             return null;
         });
     }
-    remove(id) {
+    remove(vin) {
         return __awaiter(this, void 0, void 0, function* () {
-            const affectedCount = yield BikeModel_1.default.destroy({ where: { id } });
+            const affectedCount = yield BikeModel_1.default.destroy({ where: { vin } });
             return affectedCount > 0;
         });
     }

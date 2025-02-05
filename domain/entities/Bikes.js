@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Bikes = void 0;
 class Bikes {
-    constructor(id, brand, model, mileage, registrationNumber, purchaseDate, warrantyExpirationDate, ownerId, isActive, isInMaintenance, isDecommissioned, nextMaintenanceMileage, nextMaintenanceDate, createdAt, updatedAt) {
-        this.id = id;
+    constructor(vin, brand, model, mileage, registrationNumber, purchaseDate, warrantyExpirationDate, ownerId, isActive, isInMaintenance, isDecommissioned, nextMaintenanceMileage, nextMaintenanceDate, createdAt, updatedAt) {
+        this.vin = vin;
         this.brand = brand;
         this.model = model;
         this.mileage = mileage;

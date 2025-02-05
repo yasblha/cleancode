@@ -1,12 +1,13 @@
-// infrastructure/sequelize/repositories/BikesRepository.ts
 import BikeModel from '../models/BikeModel';
 import { Bikes } from '@domain/entities/Bikes';
 import { BikesRepository } from '@domain/repositories/BikesRepository';
+import VinIdentifier from "@domain/value-objects/Vinidentifier";
 
 export class SequelizeBikesRepository implements BikesRepository {
     async create(bike: Bikes): Promise<Bikes> {
-        // @ts-ignore
-        const newBike = await BikeModel.create(bike);
+        const newBike = await BikeModel.create(
+            {Bikes: bike, vin: bike.vin.toString()}
+        );
         return newBike.toJSON() as Bikes;
     }
 
@@ -15,22 +16,21 @@ export class SequelizeBikesRepository implements BikesRepository {
         return bikes.map(bike => bike.toJSON() as Bikes);
     }
 
-    async findOne(id: string): Promise<Bikes | null> {
-        const bike = await BikeModel.findByPk(id);
+    async findOne(vin: VinIdentifier): Promise<Bikes | null> {
+        const bike = await BikeModel.findOne({ where: { vin } });
         return bike ? bike.toJSON() as Bikes : null;
     }
 
-    async update(id: string, bike: Partial<Bikes>): Promise<Bikes | null> {
-        const [affectedCount] = await BikeModel.update(bike, { where: { id } });
+    async update(vin: VinIdentifier, bike: Partial<Bikes>): Promise<Bikes | null> {
+        const [affectedCount] = await BikeModel.update(bike, { where: { vin } });
         if (affectedCount > 0) {
-            const updatedBike = await BikeModel.findByPk(id);
-            return updatedBike ? updatedBike.toJSON() as Bikes : null;
+            return this.findOne(vin);
         }
-        return null;
+        return null
     }
 
-    async remove(id: string): Promise<boolean> {
-        const affectedCount = await BikeModel.destroy({ where: { id } });
+    async remove(vin: VinIdentifier): Promise<boolean> {
+        const affectedCount = await BikeModel.destroy({ where: { vin } });
         return affectedCount > 0;
     }
 }

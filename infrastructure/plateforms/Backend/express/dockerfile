@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-WORKDIR /app
+WORKDIR /app/infrastructure/plateforms/Backend/express
 
 COPY package*.json ./
 
