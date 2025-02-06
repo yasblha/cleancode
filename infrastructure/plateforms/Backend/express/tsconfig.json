@@ -2,14 +2,19 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
-    "rootDir": "./src",
+    "rootDirs": [
+      "./src",
+      "../../../../application",
+      "../../../../domain",
+      "../../../../infrastructure"
+    ],
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
       "@app/*": ["src/*"],
-      "@application/*": ["/app/application/*"],
-      "@domain/*": ["/app/domain/*"],
-      "@infrastructure/*": ["/app/infrastructure/*"]
+      "@application/*": ["../../../../application/*"],
+      "@domain/*": ["../../../../domain/*"],
+      "@infrastructure/*": ["../../../../infrastructure/*"]
     },
     "sourceMap": true,
     "outDir": "./dist",
@@ -20,9 +25,6 @@
   },
   "include": [
     "./src/**/*.ts",
-    "/app/application/**/*.ts",
-    "/app/domain/**/*.ts",
-    "/app/infrastructure/**/*.ts"
   ],
   "exclude": [
     "node_modules",

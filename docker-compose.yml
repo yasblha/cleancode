@@ -1,9 +1,11 @@
 version: '3.9'
+
 services:
   nest:
     build:
       context: ./infrastructure/plateforms/Backend/nest
       dockerfile: dockerfile
+    container_name: nest_service
     ports:
       - "3000:3000"
     volumes:
@@ -13,14 +15,15 @@ services:
       - ./infrastructure:/app/infrastructure
       - /app/infrastructure/plateforms/Backend/nest/node_modules
     environment:
-      NODE_ENV: production
+      - NODE_ENV=production
 
   node:
     build:
-        context: ./infrastructure/plateforms/Backend/express
-        dockerfile: dockerfile
+      context: ./infrastructure/plateforms/Backend/express
+      dockerfile: dockerfile
+    container_name: express_service
     ports:
-        - "3001:3001"
+      - "3001:3001"
     volumes:
       - ./infrastructure/plateforms/Backend/express:/app/infrastructure/plateforms/Backend/express
       - ./application:/app/application
@@ -28,20 +31,21 @@ services:
       - ./infrastructure:/app/infrastructure
       - /app/infrastructure/plateforms/Backend/express/node_modules
     environment:
-        NODE_ENV: production
+      - NODE_ENV=environment
 
-  react:
+  next:
     build:
       context: ./infrastructure/plateforms/frontend/front-react
       dockerfile: dockerfile
+    container_name: next_service
     platform: linux/amd64
     ports:
-      - "80:80"
+      - "80:3000"
     volumes:
       - ./infrastructure/plateforms/frontend/front-react:/app/infrastructure/plateforms/frontend/front-react
       - /app/infrastructure/plateforms/frontend/front-react/node_modules
     environment:
-      NODE_ENV: production
+      - NODE_ENV=production
 
   postgres:
     image: postgres:15
@@ -49,9 +53,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: moto_management
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=moto_management
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -61,8 +65,8 @@ services:
     ports:
       - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
       - mongo_data:/data/db
     restart: unless-stopped

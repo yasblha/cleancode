@@ -8,21 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BikeController = void 0;
-//import { SequelizeBikesRepository } from "@infrastructure/sequelize/repositories/BikesRepository";
-//import FindAllBikeUseCase from "@application/useCases/Bikes/FindAllBikeUseCase";
+const BikesRepository_1 = require("@infrastructure/sequelize/repositories/BikesRepository");
+const FindAllBikeUseCase_1 = __importDefault(require("@application/useCases/Bikes/FindAllBikeUseCase"));
 class BikeController {
-    //    private findAllBikeUseCase: FindAllBikeUseCase;
     constructor() {
-        //        const bikesRepository = new SequelizeBikesRepository();
-        //        this.findAllBikeUseCase = new FindAllBikeUseCase(bikesRepository);
+        const bikesRepository = new BikesRepository_1.SequelizeBikesRepository();
+        this.findAllBikeUseCase = new FindAllBikeUseCase_1.default(bikesRepository);
     }
     getBikes(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                //            const bikes = await this.findAllBikeUseCase.execute();
-                //            res.json(bikes);
+                const bikes = yield this.findAllBikeUseCase.execute();
+                res.json(bikes);
             }
             catch (error) {
                 console.error("Erreur dans BikeController.getBikes :", error);

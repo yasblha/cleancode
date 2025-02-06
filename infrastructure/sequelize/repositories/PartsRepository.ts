@@ -2,7 +2,7 @@ import PartModel from '../models/PartModel';
 import { Parts } from '@domain/entities/Parts';
 import { PartsRepository } from '@domain/repositories/PartsRepository';
 import {Op} from "sequelize";
-import sequelize from "@sequelize/sequelizedb";
+import sequelize from "sequelize";
 
 export class SequelizePartsRepository implements PartsRepository {
     async create(part: Parts): Promise<Parts> {

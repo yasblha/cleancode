@@ -1,9 +1,33 @@
-// infrastructure/sequelize/models/BikeModel.ts
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../sequelizedb';
-import VinIdentifier from "@domain/value-objects/Vinidentifier";
 
-class BikeModel extends Model {
+interface BikeAttributes {
+    vin: string;
+    brand: string;
+    model: string;
+    mileage: number;
+    registrationNumber: string;
+    purchaseDate: Date;
+    warrantyExpirationDate: Date | null;
+    ownerId: string;
+    isActive: boolean;
+    isInMaintenance: boolean;
+    isDecommissioned: boolean;
+    nextMaintenanceMileage: number | null;
+    nextMaintenanceDate: Date | null;
+    createdAt: Date;
+    updatedAt: Date | null;
+}
+
+type BikeCreationAttributes = Optional<
+    BikeAttributes,
+    'createdAt' | 'updatedAt'
+>;
+
+class BikeModel
+    extends Model<BikeAttributes, BikeCreationAttributes>
+    implements BikeAttributes
+{
     public vin!: string;
     public brand!: string;
     public model!: string;
@@ -17,6 +41,7 @@ class BikeModel extends Model {
     public isDecommissioned!: boolean;
     public nextMaintenanceMileage!: number | null;
     public nextMaintenanceDate!: Date | null;
+
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date | null;
 }
@@ -55,7 +80,7 @@ BikeModel.init(
             allowNull: true,
         },
         ownerId: {
-            type: DataTypes.UUID, // Utilisez UUID pour l'ownerId
+            type: DataTypes.UUID,
             allowNull: false,
         },
         isActive: {

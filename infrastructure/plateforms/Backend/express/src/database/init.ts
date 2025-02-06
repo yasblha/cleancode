@@ -1,5 +1,4 @@
 import sequelize from './sequelizedb';
-//import ;
 
 async function initializeDatabase() {
     try {

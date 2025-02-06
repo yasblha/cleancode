@@ -15,11 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 require("./database/mongo.connection");
 const sequelizedb_1 = __importDefault(require("./database/sequelizedb"));
-//import bikeRoutes from '@app/src/routes/bike.routes';
+const bike_routes_1 = __importDefault(require("./routes/bike.routes"));
 const app = (0, express_1.default)();
 const port = 3001;
 app.use(express_1.default.json());
-//app.use('/bikes', bikeRoutes);
+app.use('/bikes', bike_routes_1.default);
 app.get('/', (req, res) => {
     res.send('Hello, TypeScript + Node.js + Express!');
 });

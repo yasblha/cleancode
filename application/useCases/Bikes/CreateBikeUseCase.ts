@@ -1,4 +1,4 @@
-import { Bikes } from "@app/domain/entities/Bikes";
+import { Bikes } from "@domain/entities/Bikes";
 import { BikesRepository } from "@domain/repositories/BikesRepository";
 import {SequelizeBikesRepository} from "@infrastructure/sequelize/repositories/BikesRepository";
 

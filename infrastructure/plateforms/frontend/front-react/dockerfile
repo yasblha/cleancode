@@ -1,27 +1,30 @@
-FROM node:18 AS build
+# Étape de construction
+FROM node:18-alpine AS builder
 
-WORKDIR /app/infrastructure/plateforms/frontend/front-react
+WORKDIR /app
 
-COPY package.json package-lock.json ./
+# Copier les fichiers de dépendances en premier pour le cache
+COPY package.json package-lock.json* ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
 RUN npm run build
 
-FROM node:18 AS production
+FROM node:18-alpine
 
-WORKDIR /app/infrastructure/plateforms/frontend/front-react
+WORKDIR /app
 
-# Copier les dépendances et le build depuis l'étape de build
-#COPY --from=build /app/infrastructure/plateforms/frontend/front-react/package.json /app/package-lock.json ./
-#COPY --from=build /app/infrastructure/plateforms/frontend/front-react/.next ./.next
-#COPY --from=build /app/infrastructure/plateforms/frontend/front-react/public ./public
-#COPY --from=build /app/infrastructure/plateforms/frontend/front-react/node_modules ./node_modules
+# Copier uniquement le nécessaire depuis le builder
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/package-lock.json ./package-lock.json
+COPY --from=builder /app/next.config.js ./next.config.js
 
-ENV PORT=80
+RUN npm ci --only=production
 
-EXPOSE 80
+EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]

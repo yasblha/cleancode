@@ -1,36 +1,78 @@
-import BikeModel from '../models/BikeModel';
+import BikeModel from '@infrastructure/sequelize/models/BikeModel';
 import { Bikes } from '@domain/entities/Bikes';
 import { BikesRepository } from '@domain/repositories/BikesRepository';
-import VinIdentifier from "@domain/value-objects/Vinidentifier";
+import VinIdentifier from '@domain/value-objects/Vinidentifier';
 
 export class SequelizeBikesRepository implements BikesRepository {
     async create(bike: Bikes): Promise<Bikes> {
-        const newBike = await BikeModel.create(
-            {Bikes: bike, vin: bike.vin.toString()}
-        );
-        return newBike.toJSON() as Bikes;
+        const newBike = await BikeModel.create({
+            vin: bike.vin.toString(),
+            brand: bike.brand,
+            model: bike.model,
+            mileage: bike.mileage,
+            registrationNumber: bike.registrationNumber,
+            purchaseDate: bike.purchaseDate,
+            warrantyExpirationDate: bike.warrantyExpirationDate,
+            ownerId: bike.ownerId,
+            isActive: bike.isActive,
+            isInMaintenance: bike.isInMaintenance,
+            isDecommissioned: bike.isDecommissioned,
+            nextMaintenanceMileage: bike.nextMaintenanceMileage,
+            nextMaintenanceDate: bike.nextMaintenanceDate,
+        });
+        const rawData = newBike.toJSON() as Bikes & { vin: string };
+        const result: Bikes = {
+            ...rawData,
+            vin: new VinIdentifier(rawData.vin),
+        };
+        return result;
     }
 
     async findAll(): Promise<Bikes[]> {
-        const bikes = await BikeModel.findAll();
-        return bikes.map(bike => bike.toJSON() as Bikes);
+        const bikeRecords = await BikeModel.findAll();
+        return bikeRecords.map((b) => {
+            const rawData = b.toJSON() as Bikes & { vin: string };
+            const result: Bikes = {
+                ...rawData,
+                vin: new VinIdentifier(rawData.vin),
+            };
+            return result;
+        });
     }
 
     async findOne(vin: VinIdentifier): Promise<Bikes | null> {
-        const bike = await BikeModel.findOne({ where: { vin } });
-        return bike ? bike.toJSON() as Bikes : null;
+        const bike = await BikeModel.findOne({
+            where: { vin: vin.toString() },
+        });
+        if (!bike) {
+            return null;
+        }
+        const rawData = bike.toJSON() as Bikes & { vin: string };
+        const result: Bikes = {
+            ...rawData,
+            vin: new VinIdentifier(rawData.vin),
+        };
+        return result;
     }
 
-    async update(vin: VinIdentifier, bike: Partial<Bikes>): Promise<Bikes | null> {
-        const [affectedCount] = await BikeModel.update(bike, { where: { vin } });
+    async update(vin: VinIdentifier, partialBike: Partial<Bikes>): Promise<Bikes | null> {
+        const updateData: any = { ...partialBike };
+        if (updateData.vin instanceof VinIdentifier) {
+            updateData.vin = updateData.vin.toString();
+        }
+        const [affectedCount] = await BikeModel.update(updateData, {
+            where: { vin: vin.toString() },
+        });
         if (affectedCount > 0) {
             return this.findOne(vin);
         }
-        return null
+        return null;
     }
 
     async remove(vin: VinIdentifier): Promise<boolean> {
-        const affectedCount = await BikeModel.destroy({ where: { vin } });
+        const affectedCount = await BikeModel.destroy({
+            where: { vin: vin.toString() },
+        });
         return affectedCount > 0;
     }
 }
