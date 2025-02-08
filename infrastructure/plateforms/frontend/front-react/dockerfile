@@ -1,9 +1,7 @@
-# Étape de construction
 FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# Copier les fichiers de dépendances en premier pour le cache
 COPY package.json package-lock.json* ./
 
 RUN npm ci
