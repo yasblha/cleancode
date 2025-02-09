@@ -1,12 +1,25 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../sequelizedb';
 
-class IncidentModel extends Model {
+interface IncidentAttributes {
+    id: string;
+    bikeId: string;
+    date: Date;
+    description: string;
+    isResolved: boolean;
+}
+
+class IncidentModel extends Model<IncidentAttributes> implements IncidentAttributes {
     public id!: string;
     public bikeId!: string;
     public date!: Date;
     public description!: string;
     public isResolved!: boolean;
+
+
+    public static associate(models: any) {
+        IncidentModel.belongsTo(models.Bike, { foreignKey: 'bikeId', targetKey: 'vin' });
+    }
 }
 
 IncidentModel.init(
@@ -39,7 +52,7 @@ IncidentModel.init(
         modelName: 'Incident',
         tableName: 'incidents',
         timestamps: false,
-    },
+    }
 );
 
 export default IncidentModel;

@@ -7,7 +7,7 @@ export default function NewBikePage() {
 
     const handleBikeSubmit = async (data: BikeFormData) => {
         try {
-            const response = await fetch("http://localhost:3001/bikes", {
+            const response = await fetch("http://localhost:3001/bikes/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data),

@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "password",
+    "database": "moto_management",
+    "host": "postgres",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "admin",
+    "password": "password",
+    "database": "moto_management",
+    "host": "postgres",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "admin",
+    "password": "password",
+    "database": "moto_management",
+    "host": "postgres",
+    "dialect": "postgres"
+  }
+}

@@ -1,5 +1,5 @@
 export interface Bike {
-    vin: string;
+    vin: string | { value: string };
     brand: string;
     model: string;
     mileage: number;
@@ -23,7 +23,6 @@ export interface BikeFormData {
     mileage: number;
     registrationNumber: string;
     purchaseDate: string;
-    ownerId: string;
 }
 
 export interface BikeFormProps {

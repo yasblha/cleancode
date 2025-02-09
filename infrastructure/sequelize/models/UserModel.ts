@@ -11,6 +11,13 @@ class UserModel extends Model {
     public isEmailVerified!: boolean;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date | null;
+
+    public static associate(models: any) {
+        // Un utilisateur peut posséder plusieurs motos.
+        UserModel.hasMany(models.Bike, { foreignKey: 'ownerId', sourceKey: 'id' });
+        // Un utilisateur peut intervenir comme technicien sur plusieurs services de maintenance.
+        UserModel.hasMany(models.MaintenanceService, { foreignKey: 'technicianId', sourceKey: 'id' });
+    }
 }
 
 UserModel.init(
@@ -62,7 +69,7 @@ UserModel.init(
         modelName: 'User',
         tableName: 'users',
         timestamps: true,
-    },
+    }
 );
 
 export default UserModel;

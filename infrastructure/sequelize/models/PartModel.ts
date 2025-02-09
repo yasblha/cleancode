@@ -10,6 +10,21 @@ class PartModel extends Model {
     public price!: number;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date | null;
+
+    public static associate(models: any) {
+        // Relation many-to-many entre Part et MaintenanceService via la table de jonction "MaintenanceServiceParts"
+        PartModel.belongsToMany(models.MaintenanceService, {
+            through: 'MaintenanceServiceParts',
+            foreignKey: 'partId',
+            otherKey: 'maintenanceServiceId',
+        });
+        // Relation many-to-many entre Part et Bike via la table de jonction "BikeParts"
+        PartModel.belongsToMany(models.Bike, {
+            through: 'BikeParts',
+            foreignKey: 'partId',
+            otherKey: 'bikeVin',
+        });
+    }
 }
 
 PartModel.init(
@@ -54,7 +69,7 @@ PartModel.init(
         modelName: 'Part',
         tableName: 'parts',
         timestamps: true,
-    },
+    }
 );
 
 export default PartModel;

@@ -10,16 +10,22 @@ export default function BikesPage() {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        fetch("http://localhost:3001/bikes")
-            .then((res) => res.json())
-            .then((data) => {
+        async function fetchBikes() {
+            try {
+                const res = await fetch("http://localhost:3001/bikes");
+                if (!res.ok) {
+                    throw new Error("Erreur lors de la récupération des données");
+                }
+                const data = await res.json();
+                console.log("Données reçues :", data);
                 setBikes(data);
-                setLoading(false);
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error("Erreur lors du chargement des motos :", error);
+            } finally {
                 setLoading(false);
-            });
+            }
+        }
+        fetchBikes();
     }, []);
 
     return (
@@ -34,7 +40,7 @@ export default function BikesPage() {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {bikes.map((bike) => (
-                        <BikeCard key={bike.vin} bike={bike} />
+                        <BikeCard key={typeof bike.vin === "object" ? bike.vin.value : bike.vin} bike={bike}/>
                     ))}
                 </div>
             )}

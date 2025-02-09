@@ -1,7 +1,24 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../sequelizedb';
 
-class MaintenanceServiceModel extends Model {
+interface MaintenanceServiceAttributes {
+    id: string;
+    bikeId: string;
+    date: Date;
+    description: string;
+    type: string;
+    isResolved: boolean;
+    cost: number;
+    partsUsed: { partId: string; quantity: number }[];
+    technicianId: string;
+    createdAt: Date;
+    updatedAt: Date | null;
+}
+
+class MaintenanceServiceModel
+    extends Model<MaintenanceServiceAttributes>
+    implements MaintenanceServiceAttributes
+{
     public id!: string;
     public bikeId!: string;
     public date!: Date;
@@ -13,6 +30,16 @@ class MaintenanceServiceModel extends Model {
     public technicianId!: string;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date | null;
+
+    /**
+     * Définir les associations entre les modèles.
+     */
+    public static associate(models: any) {
+        // Chaque MaintenanceService appartient à une Bike, identifiée par son vin.
+        MaintenanceServiceModel.belongsTo(models.Bike, { foreignKey: 'bikeId', targetKey: 'vin' });
+        // Chaque MaintenanceService est liée à un utilisateur (technicien) par l'ID.
+        MaintenanceServiceModel.belongsTo(models.User, { foreignKey: 'technicianId', targetKey: 'id' });
+    }
 }
 
 MaintenanceServiceModel.init(
@@ -70,7 +97,7 @@ MaintenanceServiceModel.init(
         modelName: 'MaintenanceService',
         tableName: 'maintenance_services',
         timestamps: true,
-    },
+    }
 );
 
 export default MaintenanceServiceModel;

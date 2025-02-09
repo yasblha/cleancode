@@ -44,6 +44,15 @@ class BikeModel
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date | null;
+
+    static associate(models: any) {
+        // Une moto appartient à un utilisateur (propriétaire)
+        BikeModel.belongsTo(models.User, { foreignKey: 'ownerId', targetKey: 'id' });
+        // Une moto a plusieurs incidents
+        BikeModel.hasMany(models.Incident, { foreignKey: 'bikeId', sourceKey: 'vin' });
+        // Une moto a plusieurs services de maintenance
+        BikeModel.hasMany(models.MaintenanceService, { foreignKey: 'bikeId', sourceKey: 'vin' });
+    }
 }
 
 BikeModel.init(

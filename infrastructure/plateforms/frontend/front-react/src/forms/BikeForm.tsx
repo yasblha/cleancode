@@ -1,7 +1,9 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -13,14 +15,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+// Schéma de validation avec Zod
 const bikeFormSchema = z.object({
     vin: z.string().min(1, { message: "Le VIN est requis." }),
     brand: z.string().min(1, { message: "La marque est requise." }),
     model: z.string().min(1, { message: "Le modèle est requis." }),
-    mileage: z.number().min(0, { message: "Le kilométrage doit être positif." }),
+    mileage: z.preprocess(
+        (val) => Number(val),
+        z.number().min(0, { message: "Le kilométrage doit être positif." })
+    ),
     registrationNumber: z.string().min(1, { message: "L&apos;immatriculation est requise." }),
     purchaseDate: z.string().min(1, { message: "La date d&apos;achat est requise." }),
-    ownerId: z.string().min(1, { message: "L&apos;ID du propriétaire est requis." }),
+    ownerId: z.string().min(1, { message: "Le propriétaire est requis." }),
 });
 
 export type BikeFormData = z.infer<typeof bikeFormSchema>;
@@ -30,6 +36,7 @@ export interface BikeFormProps {
 }
 
 export default function BikeForm({ onSubmit }: BikeFormProps) {
+    const [owners, setOwners] = useState<{ id: string; name: string }[]>([]);
     const form = useForm<BikeFormData>({
         resolver: zodResolver(bikeFormSchema),
         defaultValues: {
@@ -43,10 +50,26 @@ export default function BikeForm({ onSubmit }: BikeFormProps) {
         },
     });
 
-    function handleSubmit(values: BikeFormData) {
+    // Récupération des propriétaires depuis l'API /users
+    useEffect(() => {
+        async function fetchOwners() {
+            try {
+                const res = await fetch("http://localhost:3001/users/");
+                if (res.ok) {
+                    const data = await res.json();
+                    setOwners(data);
+                }
+            } catch (error) {
+                console.error("Erreur lors de la récupération des propriétaires :", error);
+            }
+        }
+        fetchOwners();
+    }, []);
+
+    const handleSubmit = (values: BikeFormData) => {
         onSubmit(values);
         form.reset();
-    }
+    };
 
     return (
         <Form {...form}>
@@ -97,7 +120,12 @@ export default function BikeForm({ onSubmit }: BikeFormProps) {
                         <FormItem>
                             <FormLabel>Kilométrage</FormLabel>
                             <FormControl>
-                                <Input type="number" placeholder="0" {...field} />
+                                <Input
+                                    type="number"
+                                    placeholder="0"
+                                    value={field.value}
+                                    onChange={(e) => field.onChange(Number(e.target.value))}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -134,9 +162,20 @@ export default function BikeForm({ onSubmit }: BikeFormProps) {
                     name="ownerId"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>ID du Propriétaire</FormLabel>
+                            <FormLabel>Propriétaire</FormLabel>
                             <FormControl>
-                                <Input placeholder="Entrez l&apos;ID du propriétaire" {...field} />
+                                <select
+                                    {...field}
+                                    className="border rounded px-2 py-1 w-full"
+                                    onChange={(e) => field.onChange(e.target.value)}
+                                >
+                                    <option value="">Sélectionnez un propriétaire</option>
+                                    {owners.map((owner) => (
+                                        <option key={owner.id} value={owner.id}>
+                                            {owner.name}
+                                        </option>
+                                    ))}
+                                </select>
                             </FormControl>
                             <FormMessage />
                         </FormItem>

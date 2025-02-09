@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import '@infrastructure/mongo/mongo.connection';
-import initializeDatabase from '@infrastructure/sequelize/init';
+import cors from 'cors';
+import { initializeDatabase } from '@infrastructure/sequelize/init';
 import bikeRoutes from '@app/routes/bike.routes';
 import userRoutes from '@app/routes/user.routes';
 import incidentRoutes from "@app/routes/incident.routes";
@@ -9,6 +10,8 @@ import partsRoutes from '@app/routes/parts.routes';
 
 const app = express();
 const port = 3001;
+
+app.use(cors());
 
 app.use(express.json());
 
