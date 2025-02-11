@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { MaintenanceServiceController } from "../controllers/MaintenanceServiceController";
+import { MaintenanceController } from "../controllers/MaintenanceController";
 
 const router = Router();
-const controller = new MaintenanceServiceController();
+const controller = new MaintenanceController();
 
 router.post("/", (req, res) => controller.createMaintenanceService(req, res));
 router.get("/", (req, res) => controller.getAllMaintenanceServices(req, res));

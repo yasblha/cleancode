@@ -2,9 +2,11 @@ import { PartsRepository } from '@domain/repositories/PartsRepository';
 import { Parts } from '@domain/entities/Parts';
 
 export default class CreatePartUseCase {
-    constructor(private readonly partsRepository: PartsRepository) {}
+  public constructor(
+    private readonly partRepository: PartsRepository,
+  ) {}
 
-    async execute(part: Parts): Promise<Parts> {
-        return this.partsRepository.create(part);
-    }
+  public async execute(part: Parts): Promise<Parts> {
+    return this.partRepository.create(part);
+  }
 }

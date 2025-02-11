@@ -1,10 +1,12 @@
 import { UsersRepository } from '@domain/repositories/UsersRepository';
-import { Users } from '@domain/entities/Users';
+import { User } from '@domain/entities/Users';
 
-export default class FindAllUsersUseCase {
-    constructor(private readonly usersRepository: UsersRepository) {}
+export default class FindAllUserUserCase {
+    public constructor(
+        private readonly userRepository: UsersRepository,
+    ) {}
 
-    async execute(): Promise<Users[]> {
-        return this.usersRepository.findAll();
+    public async execute(): Promise<User[]> {
+        return this.userRepository.findAll();
     }
 }

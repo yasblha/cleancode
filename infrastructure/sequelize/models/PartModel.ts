@@ -1,28 +1,44 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../sequelizedb';
+import { DataTypes, Model, Optional } from "sequelize";
+import sequelize from "../sequelizedb";
 
-class PartModel extends Model {
-    public id!: string;
+interface PartAttributes {
+    id: number;
+    name: string;
+    description: string;
+    reference: string;
+    stockQuantity: number;
+    minStockLevel: number;
+    price: number;
+    createdAt: Date;
+    updatedAt: Date | null;
+}
+
+type PartCreationAttributes = Optional<PartAttributes, "id" | "createdAt" | "updatedAt">;
+
+class PartModel
+    extends Model<PartAttributes, PartCreationAttributes>
+    implements PartAttributes
+{
+    public id!: number;
     public name!: string;
     public description!: string;
+    public reference!: string;
     public stockQuantity!: number;
     public minStockLevel!: number;
     public price!: number;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date | null;
 
-    public static associate(models: any) {
-        // Relation many-to-many entre Part et MaintenanceService via la table de jonction "MaintenanceServiceParts"
+    static associate(models: any) {
         PartModel.belongsToMany(models.MaintenanceService, {
-            through: 'MaintenanceServiceParts',
-            foreignKey: 'partId',
-            otherKey: 'maintenanceServiceId',
+            through: "maintenanceserviceparts",
+            foreignKey: "partId",
+            otherKey: "maintenanceServiceId",
         });
-        // Relation many-to-many entre Part et Bike via la table de jonction "BikeParts"
         PartModel.belongsToMany(models.Bike, {
-            through: 'BikeParts',
-            foreignKey: 'partId',
-            otherKey: 'bikeVin',
+            through: "bikeparts",
+            foreignKey: "partId",
+            otherKey: "bikeId",
         });
     }
 }
@@ -30,9 +46,10 @@ class PartModel extends Model {
 PartModel.init(
     {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER.UNSIGNED,
+            autoIncrement: true,
             primaryKey: true,
+            allowNull: false,
         },
         name: {
             type: DataTypes.STRING,
@@ -45,14 +62,22 @@ PartModel.init(
         stockQuantity: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: 0,
         },
         minStockLevel: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: 1,
         },
         price: {
             type: DataTypes.FLOAT,
             allowNull: false,
+            defaultValue: 0,
+        },
+        reference: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true,
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -66,8 +91,8 @@ PartModel.init(
     },
     {
         sequelize,
-        modelName: 'Part',
-        tableName: 'parts',
+        tableName: "parts",
+        modelName: "Part",
         timestamps: true,
     }
 );

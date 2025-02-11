@@ -2,9 +2,11 @@ import { PartsRepository } from '@domain/repositories/PartsRepository';
 import { Parts } from '@domain/entities/Parts';
 
 export default class FindLowStockPartsUseCase {
-    constructor(private readonly partsRepository: PartsRepository) {}
+  public constructor(
+    private readonly partRepository: PartsRepository,
+  ) {}
 
-    async execute(): Promise<Parts[]> {
-        return this.partsRepository.findLowStockParts();
-    }
+  public async execute(): Promise<Parts[]> {
+    return this.partRepository.findLowStockParts();
+  }
 }

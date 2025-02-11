@@ -1,10 +1,19 @@
-import { IncidentsRepository } from '@domain/repositories/IncidentsRepository';
-import { Incidents } from '@domain/entities/Incidents';
+import { SequelizeIncidentsRepository } from "@infrastructure/sequelize/repositories/IncidentsRepository";
+import { Incidents } from "@domain/entities/Incidents";
+import IncidentNotFoundError from "@domain/errors/incidents/IncidentNotFoundError";
 
 export default class FindOneIncidentUseCase {
-    constructor(private readonly incidentsRepository: IncidentsRepository) {}
+  public constructor(
+      private readonly incidentRepository: SequelizeIncidentsRepository,
+  ) {}
 
-    async execute(id: string): Promise<Incidents | null> {
-        return this.incidentsRepository.findOne(id);
+  public async execute(identifier: string): Promise<Incidents> {
+    const incident = await this.incidentRepository.findOne(identifier);
+
+    if (!incident) {
+      throw new IncidentNotFoundError("Incident not found");
     }
+
+    return incident;
+  }
 }

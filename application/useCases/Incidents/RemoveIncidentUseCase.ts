@@ -1,9 +1,18 @@
-import { IncidentsRepository } from '@domain/repositories/IncidentsRepository';
+import IncidentNotFoundError from "@domain/errors/incidents/IncidentNotFoundError";
+import { SequelizeIncidentsRepository } from "@infrastructure/sequelize/repositories/IncidentsRepository";
 
 export default class RemoveIncidentUseCase {
-    constructor(private readonly incidentsRepository: IncidentsRepository) {}
+  public constructor(
+      private readonly incidentRepository: SequelizeIncidentsRepository,
+  ) {}
 
-    async execute(id: string): Promise<boolean> {
-        return this.incidentsRepository.remove(id);
+  public async execute(identifier: string): Promise<number> {
+    const deletedResult = await this.incidentRepository.remove(identifier);
+
+    if (!deletedResult) {
+      throw new IncidentNotFoundError("Incident not found");
     }
+
+    return 1;
+  }
 }

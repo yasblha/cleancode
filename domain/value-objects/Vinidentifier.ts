@@ -1,6 +1,7 @@
 export default class VinIdentifier {
 
     public readonly value: string;
+    static REGEX: RegExp;
 
     public constructor(value: string) {
         if (!this.validate(value)) {

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { SequelizeUsersRepository } from "@infrastructure/sequelize/repositories/UsersRepository";
-import { Users } from "@domain/entities/Users";
 import { UsersRepository } from "@domain/repositories/UsersRepository";
+import { User } from "@domain/entities/Users";
 // import bcrypt from "bcrypt";
 // import jwt from "jsonwebtoken";
 
@@ -24,8 +24,7 @@ export class UserController {
 
             // const hashedPassword = await bcrypt.hash(password, 10);
 
-            const userData: Users = {
-                id: "",
+            const userData: Omit<User, "id"> = {
                 name,
                 email,
                 password,
@@ -53,13 +52,14 @@ export class UserController {
                 return;
             }
 
-            // const valid = await bcrypt.compare(password, user.password);
-            // if (!valid) {
-            //   res.status(401).json({ error: "Invalid credentials" });
-            //   return;
-            // }
-
-            // const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+            /*
+            const valid = await bcrypt.compare(password, user.password);
+            if (!valid) {
+                res.status(401).json({ error: "Invalid credentials" });
+                return;
+            }
+            const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+            */
 
             res.status(200).json({
                 message: "Login successful",

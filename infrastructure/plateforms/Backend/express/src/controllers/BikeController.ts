@@ -36,7 +36,12 @@ export class BikeController {
     async getBike(req: Request, res: Response): Promise<void> {
         try {
             const { vin } = req.params;
-            const bike = await this.findOneBikeUseCase.execute(new VinIdentifier(vin));
+            if (!vin || typeof vin !== "string") {
+                res.status(400).json({ error: "Paramètre VIN invalide" });
+                return;
+            }
+
+                const bike = await this.findOneBikeUseCase.execute(vin);
             if (!bike) {
                 res.status(404).json({ error: "Moto non trouvée" });
             } else {

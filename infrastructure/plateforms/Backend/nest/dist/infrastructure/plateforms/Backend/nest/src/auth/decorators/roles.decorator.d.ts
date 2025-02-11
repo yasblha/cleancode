@@ -1,0 +1,3 @@
+import { Role } from "@domain/value-objects/Role";
+export declare const ROLES_KEY = "roles";
+export declare const Roles: (...roles: Role[]) => import("@nestjs/common").CustomDecorator<string>;

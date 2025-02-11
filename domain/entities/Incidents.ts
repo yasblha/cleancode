@@ -1,7 +1,7 @@
 export class Incidents {
-    public constructor(
-        public id: string,
-        public bikeId: string,
+    constructor(
+        public id: number,
+        public bikeId: number,
         public date: Date,
         public description: string,
         public isResolved: boolean,

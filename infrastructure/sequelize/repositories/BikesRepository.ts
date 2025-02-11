@@ -41,18 +41,26 @@ export class SequelizeBikesRepository implements BikesRepository {
     }
 
     async findOne(vin: VinIdentifier): Promise<Bikes | null> {
-        const bike = await BikeModel.findOne({
-            where: { vin: vin.toString() },
-        });
-        if (!bike) {
+        if (!(vin instanceof VinIdentifier) || typeof vin.value !== "string") {
+            console.error("❌ Erreur : VIN invalide.");
             return null;
         }
-        const rawData = bike.toJSON() as Bikes & { vin: string };
-        const result: Bikes = {
+
+        const bike = await BikeModel.findOne({
+            where: { vin: vin.value },
+        });
+
+        if (!bike) {
+            console.log(`❌ Aucun vélo trouvé avec le VIN ${vin.value}`);
+            return null;
+        }
+
+        const rawData = bike.toJSON() as Omit<Bikes, "vin"> & { vin: string };
+
+        return {
             ...rawData,
             vin: new VinIdentifier(rawData.vin),
         };
-        return result;
     }
 
     async update(vin: VinIdentifier, partialBike: Partial<Bikes>): Promise<Bikes | null> {

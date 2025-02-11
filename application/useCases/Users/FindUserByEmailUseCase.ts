@@ -1,10 +1,19 @@
-import { UsersRepository } from '@domain/repositories/UsersRepository';
-import { Users } from '@domain/entities/Users';
+import { SequelizeUsersRepository } from "@infrastructure/sequelize/repositories/UsersRepository";
+import { User } from "@domain/entities/Users";
+import UserNotFoundError from "@domain/errors/users/UserNotFoundError";
 
-export default class FindUserByEmailUseCase {
-    constructor(private readonly usersRepository: UsersRepository) {}
+export default class FindByEmailUseCase {
+    public constructor(
+        private readonly userRepository: SequelizeUsersRepository,
+    ) {}
 
-    async execute(email: string): Promise<Users | null> {
-        return this.usersRepository.findByEmail(email);
+    public async execute(email: string): Promise<User> {
+        const user = await this.userRepository.findByEmail(email);
+
+        if (!user) {
+            throw new UserNotFoundError(`User with email ${email} not found`);
+        }
+
+        return user;
     }
 }

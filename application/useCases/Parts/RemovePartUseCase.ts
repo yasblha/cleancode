@@ -1,9 +1,18 @@
-import { PartsRepository } from '@domain/repositories/PartsRepository';
+import PartNotFoundError from "@domain/errors/parts/PartNotFoundError";
+import { PartsRepository } from "@domain/repositories/PartsRepository";
 
 export default class RemovePartUseCase {
-    constructor(private readonly partsRepository: PartsRepository) {}
+  public constructor(
+      private readonly partRepository: PartsRepository,
+  ) {}
 
-    async execute(id: string): Promise<boolean> {
-        return this.partsRepository.remove(id);
+  public async execute(identifier: string): Promise<number> {
+    const deletedPart = await this.partRepository.remove(identifier);
+
+    if (!deletedPart) {
+      throw new PartNotFoundError("Part not found");
     }
+
+    return 1;
+  }
 }

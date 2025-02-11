@@ -1,0 +1,1 @@
+{"version":3,"file":"FindAllIncidentUseCase.js","sourceRoot":"","sources":["../../../../../../../../application/useCases/incidents/FindAllIncidentUseCase.ts"],"names":[],"mappings":";;AAGA,MAAqB,sBAAsB;IACzC,YACmB,kBAAgD;QAAhD,uBAAkB,GAAlB,kBAAkB,CAA8B;IAChE,CAAC;IAEG,KAAK,CAAC,OAAO;QAClB,OAAO,IAAI,CAAC,kBAAkB,CAAC,OAAO,EAAE,CAAC;IAC3C,CAAC;CACF;AARD,yCAQC"}

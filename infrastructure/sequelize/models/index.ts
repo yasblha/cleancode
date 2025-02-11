@@ -1,8 +1,9 @@
-import BikeModel from './BikeModel';
-import IncidentModel from './IncidentModels';
-import MaintenanceServiceModel from './MaintenanceServiceModel';
-import PartModel from './PartModel';
-import UserModel from './UserModel';
+import sequelizedb from "../sequelizedb";
+import BikeModel from "./BikeModel";
+import IncidentModel from "./IncidentModels";
+import MaintenanceServiceModel from "./MaintenanceModel";
+import PartModel from "./PartModel";
+import UserModel from "./UserModel";
 
 const models = {
     Bike: BikeModel,
@@ -12,11 +13,11 @@ const models = {
     User: UserModel,
 };
 
-// Appel des associations
 Object.values(models).forEach((model: any) => {
     if (typeof model.associate === "function") {
         model.associate(models);
     }
 });
+
 
 export default models;

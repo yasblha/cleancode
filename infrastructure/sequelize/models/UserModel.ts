@@ -1,7 +1,24 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../sequelizedb';
+import { DataTypes, Model, Optional } from "sequelize";
+import sequelize from "../sequelizedb";
 
-class UserModel extends Model {
+interface UserAttributes {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    roles: string;
+    isActive: boolean;
+    isEmailVerified: boolean;
+    createdAt: Date;
+    updatedAt: Date | null;
+}
+
+type UserCreationAttributes = Optional<UserAttributes, "id" | "createdAt" | "updatedAt">;
+
+class UserModel
+    extends Model<UserAttributes, UserCreationAttributes>
+    implements UserAttributes
+{
     public id!: string;
     public name!: string;
     public email!: string;
@@ -12,24 +29,29 @@ class UserModel extends Model {
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date | null;
 
-    public static associate(models: any) {
-        // Un utilisateur peut posséder plusieurs motos.
-        UserModel.hasMany(models.Bike, { foreignKey: 'ownerId', sourceKey: 'id' });
-        // Un utilisateur peut intervenir comme technicien sur plusieurs services de maintenance.
-        UserModel.hasMany(models.MaintenanceService, { foreignKey: 'technicianId', sourceKey: 'id' });
+    static associate(models: any) {
+        UserModel.hasMany(models.Bike, {
+            foreignKey: "ownerId",
+            sourceKey: "id",
+        });
+        UserModel.hasMany(models.MaintenanceService, {
+            foreignKey: "technicianId",
+            sourceKey: "id",
+        });
     }
 }
 
 UserModel.init(
     {
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER.UNSIGNED,
+            autoIncrement: true,
             primaryKey: true,
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
+            defaultValue: "",
         },
         email: {
             type: DataTypes.STRING,
@@ -43,6 +65,7 @@ UserModel.init(
         roles: {
             type: DataTypes.STRING,
             allowNull: false,
+            defaultValue: "user",
         },
         isActive: {
             type: DataTypes.BOOLEAN,
@@ -66,8 +89,8 @@ UserModel.init(
     },
     {
         sequelize,
-        modelName: 'User',
-        tableName: 'users',
+        tableName: "users",
+        modelName: "User",
         timestamps: true,
     }
 );

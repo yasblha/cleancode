@@ -17,7 +17,8 @@
   "include": [
     "domain/**/*",
     "application/**/*",
-    "infrastructure/**/*"
+    "infrastructure/**/*",
+    "application/services/**/*"
   ],
   "exclude": [
     "node_modules",

@@ -1,10 +1,19 @@
-import { UsersRepository } from '@domain/repositories/UsersRepository';
-import { Users } from '@domain/entities/Users';
+import { SequelizeUsersRepository } from "@infrastructure/sequelize/repositories/UsersRepository";
+import { User } from "@domain/entities/Users";
+import UserNotFoundError from "@domain/errors/users/UserNotFoundError";
 
 export default class FindOneUserUseCase {
-    constructor(private readonly usersRepository: UsersRepository) {}
+    public constructor(
+        private readonly userRepository: SequelizeUsersRepository,
+    ) {}
 
-    async execute(id: string): Promise<Users | null> {
-        return this.usersRepository.findOne(id);
+    public async execute(identifier: string): Promise<User> {
+        const user = await this.userRepository.findOne(identifier);
+
+        if (!user) {
+            throw new UserNotFoundError(`User with id ${identifier} not found`);
+        }
+
+        return user;
     }
 }

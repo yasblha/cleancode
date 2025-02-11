@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import { SequelizePartsRepository } from "@infrastructure/sequelize/repositories/PartsRepository";
+import MongooseAlertRepository from "@infrastructure/mongo/repositories/Alert"
 import CreatePartUseCase from "@application/useCases/Parts/CreatePartUseCase";
 import FindAllPartsUseCase from "@application/useCases/Parts/FindAllPartsUseCase";
 import FindOnePartUseCase from "@application/useCases/Parts/FindOnePartUseCase";
 import UpdatePartUseCase from "@application/useCases/Parts/UpdatePartUseCase";
 import RemovePartUseCase from "@application/useCases/Parts/RemovePartUseCase";
 import FindLowStockPartsUseCase from "@application/useCases/Parts/FindLowStockPartsUseCase";
+import CreateAlertUseCase from "@application/useCases/alerts/CreateAlertUseCase";
+import PartNotFoundError from "@domain/errors/parts/PartNotFoundError";
 
 export class PartsController {
     private createPartUseCase: CreatePartUseCase;
@@ -17,14 +20,19 @@ export class PartsController {
 
     constructor() {
         const partsRepository = new SequelizePartsRepository();
+
+        const alertRepository = new MongooseAlertRepository();
+        const createAlertUseCase = new CreateAlertUseCase(alertRepository);
+
         this.createPartUseCase = new CreatePartUseCase(partsRepository);
         this.findAllPartsUseCase = new FindAllPartsUseCase(partsRepository);
         this.findOnePartUseCase = new FindOnePartUseCase(partsRepository);
-        this.updatePartUseCase = new UpdatePartUseCase(partsRepository);
+        this.updatePartUseCase = new UpdatePartUseCase(partsRepository, createAlertUseCase);
         this.removePartUseCase = new RemovePartUseCase(partsRepository);
         this.findLowStockPartsUseCase = new FindLowStockPartsUseCase(partsRepository);
     }
 
+    /** ✅ Création d'une pièce */
     async createPart(req: Request, res: Response): Promise<void> {
         try {
             const part = await this.createPartUseCase.execute(req.body);
@@ -35,6 +43,7 @@ export class PartsController {
         }
     }
 
+    /** ✅ Récupérer toutes les pièces */
     async getParts(req: Request, res: Response): Promise<void> {
         try {
             const parts = await this.findAllPartsUseCase.execute();
@@ -45,6 +54,7 @@ export class PartsController {
         }
     }
 
+    /** ✅ Récupérer une seule pièce */
     async getPart(req: Request, res: Response): Promise<void> {
         try {
             const { id } = req.params;
@@ -60,21 +70,33 @@ export class PartsController {
         }
     }
 
+    /** ✅ Mettre à jour une pièce */
     async updatePart(req: Request, res: Response): Promise<void> {
         try {
             const { id } = req.params;
-            const updated = await this.updatePartUseCase.execute(id, req.body);
-            if (!updated) {
-                res.status(404).json({ error: "Pièce non trouvée" });
-            } else {
-                res.json(updated);
+            if (!id) {
+                res.status(400).json({ error: "ID de pièce manquant." });
+                return;
             }
+            if (!req.body || Object.keys(req.body).length === 0) {
+                res.status(400).json({ error: "Données de mise à jour manquantes." });
+                return;
+            }
+
+            const updatedPart = await this.updatePartUseCase.execute(id, req.body);
+            res.status(200).json(updatedPart);
         } catch (error) {
             console.error("Erreur dans PartsController.updatePart:", error);
-            res.status(500).json({ error: "Erreur interne" });
+
+            if (error instanceof PartNotFoundError) {
+                res.status(404).json({ error: "Pièce non trouvée." });
+            } else {
+                res.status(500).json({ error: "Erreur interne du serveur." });
+            }
         }
     }
 
+    /** ✅ Supprimer une pièce */
     async removePart(req: Request, res: Response): Promise<void> {
         try {
             const { id } = req.params;
@@ -90,6 +112,7 @@ export class PartsController {
         }
     }
 
+    /** ✅ Récupérer les pièces avec stock bas */
     async getLowStockParts(req: Request, res: Response): Promise<void> {
         try {
             const parts = await this.findLowStockPartsUseCase.execute();

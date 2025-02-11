@@ -1,0 +1,74 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const sequelize_1 = require("sequelize");
+const sequelizedb_1 = require("../sequelizedb");
+class MaintenanceServiceModel extends sequelize_1.Model {
+    static associate(models) {
+        MaintenanceServiceModel.belongsTo(models.Bike, {
+            foreignKey: "bikeId",
+            targetKey: "id",
+        });
+        MaintenanceServiceModel.belongsTo(models.User, {
+            foreignKey: "technicianId",
+            targetKey: "id",
+        });
+    }
+}
+MaintenanceServiceModel.init({
+    id: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    bikeId: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+    },
+    date: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false,
+    },
+    description: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    type: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    isResolved: {
+        type: sequelize_1.DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+    },
+    cost: {
+        type: sequelize_1.DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0,
+    },
+    partsUsed: {
+        type: sequelize_1.DataTypes.JSON,
+        allowNull: false,
+        defaultValue: [],
+    },
+    technicianId: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+    },
+    createdAt: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize_1.DataTypes.NOW,
+    },
+    updatedAt: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: true,
+    },
+}, {
+    sequelize: sequelizedb_1.default,
+    tableName: "maintenance_services",
+    modelName: "MaintenanceService",
+    timestamps: true,
+});
+exports.default = MaintenanceServiceModel;
+//# sourceMappingURL=MaintenanceServiceModel.js.map

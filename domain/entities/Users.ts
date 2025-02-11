@@ -1,5 +1,5 @@
-export class Users {
-    public constructor(
+export class User {
+    constructor(
         public id: string,
         public name: string,
         public email: string,
@@ -10,6 +10,4 @@ export class Users {
         public createdAt: Date,
         public updatedAt: Date | null,
     ) {}
-
-
 }

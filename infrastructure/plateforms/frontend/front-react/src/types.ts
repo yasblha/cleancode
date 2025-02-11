@@ -1,4 +1,5 @@
 export interface Bike {
+    id: number;
     vin: string | { value: string };
     brand: string;
     model: string;

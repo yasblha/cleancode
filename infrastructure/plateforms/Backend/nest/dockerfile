@@ -1,13 +1,33 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app/infrastructure/plateforms/Backend/nest
 
+RUN npm install -g @nestjs/cli
 COPY package.json package-lock.json ./
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY . .
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "start:dev" ]
+RUN cd dist/infrastructure/plateforms/Backend/nest
+
+CMD [ "node", "dist/infrastructure/plateforms/Backend/nest/src/main.js" ]
+
+#FROM node:18-alpine
+
+#  WORKDIR /app
+
+#  COPY package*.json ./
+
+#  RUN npm install
+
+#  COPY . .
+
+#  WORKDIR /app/infrastructure/plateforms/Backend/nest
+
+#  EXPOSE 3000
+
+#  # Démarrer l'application en mode développement (avec watch)
+#  CMD ["npm", "run", "start:dev"]

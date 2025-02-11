@@ -1,0 +1,1 @@
+{"version":3,"file":"SearchByNameUseCase.js","sourceRoot":"","sources":["../../../../../../../../application/useCases/companies/SearchByNameUseCase.ts"],"names":[],"mappings":";;AAGA,MAAqB,mBAAmB;IACtC,YACmB,iBAA4C;QAA5C,sBAAiB,GAAjB,iBAAiB,CAA2B;IAC5D,CAAC;IAEG,KAAK,CAAC,OAAO,CAAC,IAAY;QAC/B,OAAO,IAAI,CAAC,iBAAiB,CAAC,YAAY,CAAC,IAAI,CAAC,CAAC;IACnD,CAAC;CACF;AARD,sCAQC"}

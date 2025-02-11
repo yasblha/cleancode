@@ -1,10 +1,19 @@
+import PartNotFoundError from "@domain/errors/parts/PartNotFoundError";
 import { PartsRepository } from '@domain/repositories/PartsRepository';
 import { Parts } from '@domain/entities/Parts';
 
 export default class FindOnePartUseCase {
-    constructor(private readonly partsRepository: PartsRepository) {}
+  public constructor(
+      private readonly partRepository: PartsRepository,
+  ) {}
 
-    async execute(id: string): Promise<Parts | null> {
-        return this.partsRepository.findOne(id);
+  public async execute(identifier: string): Promise<Parts> {
+    const part = await this.partRepository.findOne(identifier);
+
+    if (!part) {
+      throw new PartNotFoundError(`Part not found for identifier ${identifier}`);
     }
+
+    return part;
+  }
 }

@@ -1,7 +1,8 @@
-import { DataTypes, Model, Optional } from 'sequelize';
-import sequelize from '../sequelizedb';
+import { DataTypes, Model, Optional } from "sequelize";
+import sequelize from "../sequelizedb";
 
 interface BikeAttributes {
+    id: number;
     vin: string;
     brand: string;
     model: string;
@@ -9,25 +10,21 @@ interface BikeAttributes {
     registrationNumber: string;
     purchaseDate: Date;
     warrantyExpirationDate: Date | null;
-    ownerId: string;
+    ownerId: number;
     isActive: boolean;
     isInMaintenance: boolean;
     isDecommissioned: boolean;
     nextMaintenanceMileage: number | null;
     nextMaintenanceDate: Date | null;
-    createdAt: Date;
-    updatedAt: Date | null;
 }
 
-type BikeCreationAttributes = Optional<
-    BikeAttributes,
-    'createdAt' | 'updatedAt'
->;
+type BikeCreationAttributes = Optional<BikeAttributes, "id">;
 
 class BikeModel
     extends Model<BikeAttributes, BikeCreationAttributes>
     implements BikeAttributes
 {
+    public id!: number;
     public vin!: string;
     public brand!: string;
     public model!: string;
@@ -35,31 +32,35 @@ class BikeModel
     public registrationNumber!: string;
     public purchaseDate!: Date;
     public warrantyExpirationDate!: Date | null;
-    public ownerId!: string;
+    public ownerId!: number;
     public isActive!: boolean;
     public isInMaintenance!: boolean;
     public isDecommissioned!: boolean;
     public nextMaintenanceMileage!: number | null;
     public nextMaintenanceDate!: Date | null;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date | null;
-
     static associate(models: any) {
-        // Une moto appartient à un utilisateur (propriétaire)
-        BikeModel.belongsTo(models.User, { foreignKey: 'ownerId', targetKey: 'id' });
-        // Une moto a plusieurs incidents
-        BikeModel.hasMany(models.Incident, { foreignKey: 'bikeId', sourceKey: 'vin' });
-        // Une moto a plusieurs services de maintenance
-        BikeModel.hasMany(models.MaintenanceService, { foreignKey: 'bikeId', sourceKey: 'vin' });
+        // Exemple de relations
+        BikeModel.belongsTo(models.User, { foreignKey: "ownerId", targetKey: "id" });
+        BikeModel.hasMany(models.Incident, { foreignKey: "bikeId", sourceKey: "id" });
+        BikeModel.hasMany(models.MaintenanceService, { foreignKey: "bikeId", sourceKey: "id" });
+        BikeModel.belongsToMany(models.Part, {
+            through: "bikeparts",
+            foreignKey: "bikeId",
+            otherKey: "partId",
+        });
     }
 }
 
 BikeModel.init(
     {
+        id: {
+            type: DataTypes.INTEGER, // Pas de UNSIGNED
+            autoIncrement: true,
+            primaryKey: true,
+        },
         vin: {
             type: DataTypes.STRING(17),
-            primaryKey: true,
             allowNull: false,
             unique: true,
         },
@@ -74,6 +75,7 @@ BikeModel.init(
         mileage: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue: 0,
         },
         registrationNumber: {
             type: DataTypes.STRING,
@@ -89,7 +91,7 @@ BikeModel.init(
             allowNull: true,
         },
         ownerId: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         isActive: {
@@ -115,22 +117,13 @@ BikeModel.init(
             type: DataTypes.DATE,
             allowNull: true,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: true,
-        },
     },
     {
         sequelize,
-        modelName: 'Bike',
-        tableName: 'bikes',
+        tableName: "bikes",
+        modelName: "Bike",
         timestamps: true,
-    },
+    }
 );
 
 export default BikeModel;

@@ -1,0 +1,1 @@
+{"version":3,"file":"CreateIncidentUseCase.js","sourceRoot":"","sources":["../../../../../../../../application/useCases/incidents/CreateIncidentUseCase.ts"],"names":[],"mappings":";;AAGA,MAAqB,qBAAqB;IACxC,YACmB,kBAAgD;QAAhD,uBAAkB,GAAlB,kBAAkB,CAA8B;IAChE,CAAC;IAEG,KAAK,CAAC,OAAO,CAAC,QAAmB;QACtC,OAAO,IAAI,CAAC,kBAAkB,CAAC,MAAM,CAAC,QAAQ,CAAC,CAAC;IAClD,CAAC;CACF;AARD,wCAQC"}

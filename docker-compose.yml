@@ -15,7 +15,7 @@ services:
       - ./infrastructure:/app/infrastructure
       - /app/infrastructure/plateforms/Backend/nest/node_modules
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
 
   node:
     build:

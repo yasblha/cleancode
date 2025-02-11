@@ -1,7 +1,8 @@
 import VinIdentifier from "@domain/value-objects/Vinidentifier";
 
 export class Bikes {
-    public constructor(
+    constructor(
+        public id: number,
         public vin: VinIdentifier,
         public brand: string,
         public model: string,
@@ -9,7 +10,7 @@ export class Bikes {
         public registrationNumber: string,
         public purchaseDate: Date,
         public warrantyExpirationDate: Date | null,
-        public ownerId: string,
+        public ownerId: number,
         public isActive: boolean,
         public isInMaintenance: boolean,
         public isDecommissioned: boolean,

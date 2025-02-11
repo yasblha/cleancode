@@ -1,10 +1,25 @@
-import { UsersRepository } from '@domain/repositories/UsersRepository';
-import { Users } from '@domain/entities/Users';
+import { SequelizeUsersRepository } from "@infrastructure/sequelize/repositories/UsersRepository";
+import { User } from "@domain/entities/Users";
+import {PasswordService} from "../../services/PasswordService";
+import UserNotFoundError from "@domain/errors/users/UserNotFoundError";
 
 export default class UpdateUserUseCase {
-    constructor(private readonly usersRepository: UsersRepository) {}
+    public constructor(
+        private readonly userRepository: SequelizeUsersRepository,
+        private readonly passwordService: PasswordService,
+    ) {}
 
-    async execute(id: string, user: Partial<Users>): Promise<Users | null> {
-        return this.usersRepository.update(id, user);
+    public async execute(identifier: string, user: Partial<User>): Promise<User> {
+        if (user.password) {
+            user.password = await this.passwordService.hashPassword(user.password);
+        }
+
+        const updatedUser = await this.userRepository.update(identifier, user);
+
+        if (!updatedUser) {
+            throw new UserNotFoundError(`User with id ${identifier} not found`);
+        }
+
+        return updatedUser;
     }
 }

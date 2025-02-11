@@ -1,10 +1,10 @@
-import { Users } from '../entities/Users';
+import { User } from '../entities/Users';
 
 export interface UsersRepository {
-    create(user: Users): Promise<Users>;
-    findAll(): Promise<Users[]>;
-    findOne(id: string): Promise<Users | null>;
-    update(id: string, user: Partial<Users>): Promise<Users | null>;
+    create(data: Omit<User, "id">): Promise<User>;
+    findAll(): Promise<User[]>;
+    findOne(id: string): Promise<User | null>;
+    update(id: string, user: Partial<User>): Promise<User | null>;
     remove(id: string): Promise<boolean>;
-    findByEmail(email: string): Promise<Users | null>;
+    findByEmail(email: string): Promise<User | null>;
 }

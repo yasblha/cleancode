@@ -1,10 +1,10 @@
-import { MaintenanceServicesRepository } from '@domain/repositories/MaintenanceServicesRepository';
-import { MaintenanceServices } from '@domain/entities/MaintainanceServices';
+import { MaintenanceRepository } from '@domain/repositories/MaintenanceRepository';
+import { Maintenance } from '@domain/entities/Maintenance';
 
 export default class FindAllMaintenanceServicesUseCase {
-    constructor(private readonly maintenanceServicesRepository: MaintenanceServicesRepository) {}
+    constructor(private readonly maintenanceServicesRepository: MaintenanceRepository) {}
 
-    async execute(): Promise<MaintenanceServices[]> {
+    async execute(): Promise<Maintenance[]> {
         return this.maintenanceServicesRepository.findAll();
     }
 }

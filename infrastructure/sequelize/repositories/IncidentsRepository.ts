@@ -38,4 +38,13 @@ export class SequelizeIncidentsRepository implements IncidentsRepository {
         const incidents = await IncidentModel.findAll({ where: { bikeId } });
         return incidents.map(incident => incident.toJSON() as Incidents);
     }
+    async searchByBikeVin(vin: string): Promise<Incidents[]> {
+        const incidents = await IncidentModel.findAll({
+            where: {
+                ['vin']: vin
+            }
+        } as any);
+        return incidents.map(incident => incident.toJSON() as Incidents);
+    }
+
 }

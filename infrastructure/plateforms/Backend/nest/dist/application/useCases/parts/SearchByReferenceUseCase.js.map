@@ -1,0 +1,1 @@
+{"version":3,"file":"SearchByReferenceUseCase.js","sourceRoot":"","sources":["../../../../../../../../application/useCases/Parts/SearchByReferenceUseCase.ts"],"names":[],"mappings":";;AAGA,MAAqB,wBAAwB;IAC3C,YACmB,cAAwC;QAAxC,mBAAc,GAAd,cAAc,CAA0B;IACxD,CAAC;IAEG,KAAK,CAAC,OAAO,CAAC,SAAiB;QACpC,OAAO,IAAI,CAAC,cAAc,CAAC,iBAAiB,CAAC,SAAS,CAAC,CAAC;IAC1D,CAAC;CACF;AARD,2CAQC"}

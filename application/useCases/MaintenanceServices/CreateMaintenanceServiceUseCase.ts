@@ -1,11 +1,12 @@
-import { MaintenanceServicesRepository } from '@domain/repositories/MaintenanceServicesRepository';
-import { MaintenanceServices } from '@domain/entities/MaintainanceServices';
-
+import { MaintenanceRepository } from '@domain/repositories/MaintenanceRepository';
+import { Maintenance } from '@domain/entities/Maintenance';
 
 export default class CreateMaintenanceServiceUseCase {
-    constructor(private readonly maintenanceServicesRepository: MaintenanceServicesRepository) {}
+    constructor(
+      private readonly maintenanceServicesRepository: MaintenanceRepository
+    ) {}
 
-    async execute(service: MaintenanceServices): Promise<MaintenanceServices> {
-        return this.maintenanceServicesRepository.create(service);
+    async execute(serviceData: Maintenance): Promise<Maintenance> {
+        return this.maintenanceServicesRepository.create(serviceData);
     }
 }
