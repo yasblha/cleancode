@@ -22,6 +22,7 @@ export default function BikesPage() {
                 const data = await res.json();
                 localStorage.setItem("bikesList", JSON.stringify(data)); // Stocke la liste des bikes
                 setBikes(data);
+                console.log(data);
             } catch (error) {
                 console.error("Erreur lors du chargement des motos :", error);
             } finally {
