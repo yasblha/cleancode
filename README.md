@@ -1,96 +1,98 @@
-# cleancode
+# Projet de gestion de la facturation de l'eau
 
-## Branches par Fonctionnalité
+Application complète basée sur une architecture en microservices pour gérer les contrats, la facturation, les opérations techniques, les affaires et les workflows associés à la gestion de l'eau.
 
-### 1. `feature/authentification`
-- **Backend :**
-    - Créer les endpoints d’inscription, connexion et déconnexion.
-    - Implémenter les use cases pour :
-        - Valider les informations d’inscription (longueur du mot de passe, unicité de l’email, etc.).
-        - Générer et valider des tokens (JWT, par exemple).
-        - Gérer la réinitialisation de mot de passe.
-    - Mettre en place un middleware pour protéger les endpoints sensibles.
+## 🚀 Lancer le projet avec Docker Compose
 
-- **Frontend :**
-    - Créer des formulaires pour l’inscription et la connexion.
-    - Gérer l’état de l’authentification (stockage du token, redirection après connexion).
-    - Afficher des messages d’erreur et de succès.
+```bash
+docker compose up -d --build
+```
 
----
+## 📌 Fonctionnalités principales :
 
-### 2. `feature/gestionMotos`
-- **Backend :**
-    - Implémenter un CRUD pour les motos :
-        - **Create** : Ajouter une moto (enregistrer VIN, marque, modèle, etc.).
-        - **Read** : Récupérer la liste complète et les détails d’une moto spécifique.
-        - **Update** : Modifier les informations d’une moto.
-        - **Delete** : Supprimer une moto.
-    - Assurer le suivi du statut des motos (active, en maintenance, décommissionnée).
+### 🔐 Authentification et Gestion des habilitations
 
-- **Frontend :**
-    - Développer une interface pour afficher la liste des motos.
-    - Créer une page de détail pour consulter et modifier une moto.
-    - Fournir des formulaires pour ajouter ou supprimer une moto.
+- **Authentification sécurisée :** JWT, MFA, SSO.
+- **Gestion fine des utilisateurs internes :** rôles granulaires (administrateur, technicien, chargé clientèle).
+- **Logs détaillés des actions utilisateurs.**
+- **Conformité RGPD :** gestion des consentements, anonymisation, droit à l'oubli.
 
----
+### 📑 Gestion des Contrats
 
-### 3. `feature/gestionMaintenance`
-- **Backend :**
-    - Développer des use cases pour :
-        - Planifier les entretiens préventifs et curatifs.
-        - Définir des intervalles d’entretien (ex. 10 000 km pour une Street Triple, annuel, etc.).
-        - Envoyer des rappels automatiques à l’approche de l’échéance.
-        - Enregistrer l’historique des entretiens et des pannes/garanties.
-    - Créer les endpoints nécessaires pour accéder à ces fonctionnalités.
+- **Gestion des contrats multi-types :** résidentiels, commerciaux, industriels, agricoles.
+- **Cycle de vie des contrats :** création, validation, activation, modification, suspension, résiliation.
+- **Gestion des cosignataires multiples :** colocation, copropriété.
+- **Tarification dynamique :** calcul automatique selon profil, consommation, périodes.
+- **Templates personnalisés :** modèles propres à chaque entreprise.
 
-- **Frontend :**
-    - Concevoir une interface de planification des entretiens.
-    - Afficher l’historique des maintenances réalisées.
-    - Mettre en place un système de notifications pour les entretiens à venir.
+### 💳 Facturation et Paiements
 
----
+- **Facturation automatisée intelligente :** périodique ou à la demande selon consommation réelle ou estimée.
+- **Facturation multi-services :** eau potable, assainissement et services annexes.
+- **Intégration complète des paiements :** SEPA, carte bancaire, paiement mobile.
+- **Gestion complète du recouvrement :** relances automatiques, échelonnement, gestion des contentieux.
 
-### 4. `feature/gestionStocks`
-- **Backend :**
-    - Implémenter un CRUD pour la gestion des pièces détachées :
-        - **Create** : Ajouter de nouvelles pièces.
-        - **Read** : Récupérer la liste des pièces et leurs niveaux de stock.
-        - **Update** : Mettre à jour les informations ou quantités en stock.
-        - **Delete** : Supprimer une pièce.
-    - Détecter automatiquement les seuils critiques de stock et générer des alertes.
-    - Enregistrer l’historique des commandes (coûts, délais, quantités restantes).
+### 🔧 Opérations Techniques
 
-- **Frontend :**
-    - Développer des tableaux de bord pour consulter et suivre le stock de pièces.
-    - Créer des formulaires pour la gestion des commandes et la mise à jour des stocks.
-    - Afficher des alertes en cas de stock bas.
+- **Gestion des interventions :** demandes, planification, bons d'intervention automatiques.
+- **Suivi des incidents :** fuites, surconsommation, urgences.
+- **Intégration IoT :** supervision et relève automatique à distance des compteurs.
 
----
+### 📁 Affaires et Workflow
 
-### 5. `feature/suiviEssais`
-- **Backend :**
-    - Gérer les profils des conducteurs (informations, permis, expérience, historique de conduite).
-    - Implémenter des use cases pour :
-        - Affecter des motos aux conducteurs pour des essais.
-        - Enregistrer et consulter l’historique des incidents (accidents, infractions, etc.).
-    - Créer les endpoints associés.
+- **Système de gestion d'affaires :** regroupement d'opérations selon besoins métier (installation, relances, interventions techniques).
+- **Automatisation des workflows :** auto-création d'affaires (contrats, relances, facturations).
+- **Suivi d'avancement clair :** visualisation d'étapes, gestion des blocages.
 
-- **Frontend :**
-    - Concevoir une interface pour visualiser et gérer les profils des conducteurs.
-    - Mettre en place des formulaires pour assigner des motos aux essais.
-    - Afficher l’historique des incidents liés aux essais.
+### 📊 Interface Utilisateur (Frontend)
+
+- **Espace client interactif :** accès aux factures, historique de consommation, soumission des réclamations.
+- **Notifications personnalisées :** alertes email/SMS.
+- **Formulaires dynamiques :** questionnaires de satisfaction, retours d'expérience automatisés.
+
+## 🐳 Lancer l'application localement avec Docker
+
+Assure-toi que Docker est installé puis lance cette commande :
+
+```bash
+docker compose up -d --build
+```
+
+L'application sera accessible sur :
+
+- Frontend : `http://localhost:8080`
+- Auth-service : `http://localhost:3000`
+- Agency-service : `http://localhost:3001`
+- Contrat-service : `http://localhost:3002`
+- Operations-service : `http://localhost:3003`
+- Billing-service : `http://localhost:3004`
+
+**RabbitMQ Management UI :** `http://localhost:15672`
 
 ---
 
-## Architecture et Organisation
+## 🔑 Identifiants par défaut
 
-- **Domain :**
-    - Contient les entités, interfaces, agrégats, erreurs et value objects.
-- **Application :**
-    - Contient les use cases, DTOs et services.
-- **Infrastructure :**
-    - **Database :** Connexions (PostgreSQL, MongoDB).
-    - **Repositories/Adapters :** Implémentations concrètes (Sequelize, etc.).
-    - **Controllers/Routes :** Endpoints Express (pour l’instant, uniquement Express).
-- **Frontend :**
-    - Interfaces utilisateur (Next.js, React, etc.).
+- **Postgres :**
+  - User : `postgres`
+  - Password : `postgres`
+
+---
+
+## 🌐 Architecture du projet
+
+```
+project-root/
+├── domain/         (Entités métier globales)
+├── application/    (Cas d'utilisation métier)
+├── Infrastructure/
+│   ├── microservices/ (Backends NestJS)
+│   └── Front/         (Vue.js)
+├── docker-compose.yml
+└── README.md
+```
+
+---
+
+🚀 **Bonne utilisation !**
+
