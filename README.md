@@ -1,96 +1,168 @@
-# cleancode
+# 🧼 CleanCode — Gestion de flotte de motos
 
-## Branches par Fonctionnalité
+## 🛠️ Objectif
 
-### 1. `feature/authentification`
-- **Backend :**
-    - Créer les endpoints d’inscription, connexion et déconnexion.
-    - Implémenter les use cases pour :
-        - Valider les informations d’inscription (longueur du mot de passe, unicité de l’email, etc.).
-        - Générer et valider des tokens (JWT, par exemple).
-        - Gérer la réinitialisation de mot de passe.
-    - Mettre en place un middleware pour protéger les endpoints sensibles.
-
-- **Frontend :**
-    - Créer des formulaires pour l’inscription et la connexion.
-    - Gérer l’état de l’authentification (stockage du token, redirection après connexion).
-    - Afficher des messages d’erreur et de succès.
+Plateforme de gestion complète d’un parc de motos incluant :
+- Authentification sécurisée
+- Suivi des véhicules (état, historique, essais)
+- Gestion des maintenances
+- Suivi des stocks de pièces
+- Affectation des essais à des conducteurs
+- Architecture modulaire Clean Code
 
 ---
 
-### 2. `feature/gestionMotos`
-- **Backend :**
-    - Implémenter un CRUD pour les motos :
-        - **Create** : Ajouter une moto (enregistrer VIN, marque, modèle, etc.).
-        - **Read** : Récupérer la liste complète et les détails d’une moto spécifique.
-        - **Update** : Modifier les informations d’une moto.
-        - **Delete** : Supprimer une moto.
-    - Assurer le suivi du statut des motos (active, en maintenance, décommissionnée).
+## 🌱 Stack Technique
 
-- **Frontend :**
-    - Développer une interface pour afficher la liste des motos.
-    - Créer une page de détail pour consulter et modifier une moto.
-    - Fournir des formulaires pour ajouter ou supprimer une moto.
+| Backend                   | Frontend        | Base de données      | DevOps & Architecture      |
+|---------------------------|-----------------|----------------------|----------------------------|
+| Node.js (Express, NestJS) | React / Next.js | PostgreSQL / MongoDB | Clean Architecture, Docker |
 
 ---
 
-### 3. `feature/gestionMaintenance`
-- **Backend :**
-    - Développer des use cases pour :
-        - Planifier les entretiens préventifs et curatifs.
-        - Définir des intervalles d’entretien (ex. 10 000 km pour une Street Triple, annuel, etc.).
-        - Envoyer des rappels automatiques à l’approche de l’échéance.
-        - Enregistrer l’historique des entretiens et des pannes/garanties.
-    - Créer les endpoints nécessaires pour accéder à ces fonctionnalités.
+## 🌿 Arborescence Clean Code
 
-- **Frontend :**
-    - Concevoir une interface de planification des entretiens.
-    - Afficher l’historique des maintenances réalisées.
-    - Mettre en place un système de notifications pour les entretiens à venir.
-
----
-
-### 4. `feature/gestionStocks`
-- **Backend :**
-    - Implémenter un CRUD pour la gestion des pièces détachées :
-        - **Create** : Ajouter de nouvelles pièces.
-        - **Read** : Récupérer la liste des pièces et leurs niveaux de stock.
-        - **Update** : Mettre à jour les informations ou quantités en stock.
-        - **Delete** : Supprimer une pièce.
-    - Détecter automatiquement les seuils critiques de stock et générer des alertes.
-    - Enregistrer l’historique des commandes (coûts, délais, quantités restantes).
-
-- **Frontend :**
-    - Développer des tableaux de bord pour consulter et suivre le stock de pièces.
-    - Créer des formulaires pour la gestion des commandes et la mise à jour des stocks.
-    - Afficher des alertes en cas de stock bas.
+```
+cleancode/
+├── application/
+│   ├── services/
+│   └── usecases/
+├── domain/
+│   ├── entities/
+│   ├── errors/
+│   ├── repositories/
+│   └── value-objects/
+├── infrastructure/
+│   ├── Mongo/
+│   ├── sequelize/
+│   └── plateforms/
+│       ├── Backend/
+│       │   ├── express/
+│       │   └── nestjs/
+│       └── Frontend/
+│           └── frontreact/
+```
 
 ---
 
-### 5. `feature/suiviEssais`
-- **Backend :**
-    - Gérer les profils des conducteurs (informations, permis, expérience, historique de conduite).
-    - Implémenter des use cases pour :
-        - Affecter des motos aux conducteurs pour des essais.
-        - Enregistrer et consulter l’historique des incidents (accidents, infractions, etc.).
-    - Créer les endpoints associés.
+##  Branches par Fonctionnalité
 
-- **Frontend :**
-    - Concevoir une interface pour visualiser et gérer les profils des conducteurs.
-    - Mettre en place des formulaires pour assigner des motos aux essais.
-    - Afficher l’historique des incidents liés aux essais.
+### 🔐 feature/authentification
+
+#### Backend
+- Endpoints : inscription, connexion, déconnexion
+- Validation email, sécurité mot de passe, JWT
+- Middleware de protection des routes
+- Réinitialisation du mot de passe
+
+#### Frontend
+- Formulaires d’inscription et connexion
+- Gestion de session, redirection
+- Feedback utilisateur
 
 ---
 
-## Architecture et Organisation
+### 🏍️ feature/gestionMotos
 
-- **Domain :**
-    - Contient les entités, interfaces, agrégats, erreurs et value objects.
-- **Application :**
-    - Contient les use cases, DTOs et services.
-- **Infrastructure :**
-    - **Database :** Connexions (PostgreSQL, MongoDB).
-    - **Repositories/Adapters :** Implémentations concrètes (Sequelize, etc.).
-    - **Controllers/Routes :** Endpoints Express (pour l’instant, uniquement Express).
-- **Frontend :**
-    - Interfaces utilisateur (Next.js, React, etc.).
+#### Backend
+- CRUD moto : VIN, marque, modèle, état
+- Statuts : active, maintenance, retirée
+
+#### Frontend
+- Liste, fiche, formulaire d'ajout/modification/suppression moto
+
+---
+
+### 🔧 feature/gestionMaintenance
+
+#### Backend
+- Entretien préventif/curatif
+- Intervalles personnalisés
+- Rappels automatiques
+- Historique des interventions
+
+#### Frontend
+- Planification des maintenances
+- Historique
+- Notifications d’échéance
+
+---
+
+### 🧩 feature/gestionStocks
+
+#### Backend
+- CRUD pièces détachées
+- Alertes de seuil critique
+- Suivi des commandes (coût, stock, délais)
+
+#### Frontend
+- Tableaux de bord stock
+- Formulaire de commande/édition
+- Alertes visuelles
+
+---
+
+### 🧪 feature/suiviEssais
+
+#### Backend
+- Profils des conducteurs (permis, historique)
+- Affectation moto/essai
+- Historique incidents
+
+#### Frontend
+- Interface profils conducteurs
+- Formulaires d’affectation
+- Visualisation des essais
+
+---
+
+## 🧭 Architecture Technique
+
+| Couche         | Rôle                                                   |
+|----------------|--------------------------------------------------------|
+| Domain         | Entités, interfaces, erreurs, value-objects            |
+| Application    | UseCases, Services, DTOs                               |
+| Infrastructure | DB, Repositories, Adapters, Routes, External services  |
+| Frontend       | Vue client (Next.js, React)                            |
+
+---
+
+## 🧠 Convention Git
+
+### 📝 Commits
+
+```
+Feature: feature/(nom) : sujet
+Fix: fix/(issue) : correction
+Docs: docs/(issue) : mise à jour documentation
+```
+
+### 🌿 Branches
+
+```
+feature/{nom}
+fix/{nom}
+docs/{nom}
+```
+
+### 🔀 Merge Requests
+
+- Toujours vers `develop`
+- Review obligatoire par un autre dev
+
+---
+
+## 👨‍💻 Auteurs
+
+| Nom                    | GitHub                                   | Rôle / Fonctionnalité                     |
+|------------------------|------------------------------------------|-------------------------------------------|
+| Yassine BOULAHNINE     | [@yasblha](https://github.com/yasblha)   | Backend CleanCode, Architecture, Auth, Motos |
+|                        | [@yasblha](https://github.com/yasblha)   | Frontend gestion essais / maintenance     |
+|                        | [@yasblha](https://github.com/yasblha)   | Stock pièces, back + front                |
+
+---
+
+## 📃 Licence
+
+Projet développé dans un objectif de démonstration pédagogique.  
+Utilisation libre à condition de mentionner les auteurs.
